@@ -447,7 +447,7 @@ createTerrainMatrix(scene, perlinNoise){
           }
  
     }
-
+}
         buildRoad() {
                 let roadx = 0;  //keep track of x coordinate for curves
                 for(let i=0; i<roadLength; i++)
