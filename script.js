@@ -332,6 +332,36 @@ customElements.define("game-view", class extends HTMLElement {
                 };
                 orientation_sensor.start();
                 }
+                const accl = new Accelerometer({frequency: sensorfreq});
+                const gyro = new Gyroscope({frequency: sensorfreq});
+                let timestamp = null;
+                let alpha = beta = gamma = 0;
+                const bias = 0.98;
+const zeroBias = 0.02;
+                gyro.onreading = () => {
+                   let dt = timestamp ? (gyro.timestamp - timestamp) / 1000 : 0;
+                   timestamp = gyro.timestamp;
+
+                   // Treat the acceleration vector as an orientation vector by normalizing it.
+                   // Keep in mind that the if the device is flipped, the vector will just be
+                   // pointing in the other direction, so we have no way to know from the
+                   // accelerometer data which way the device is oriented.
+                   const norm = Math.sqrt(accl.x ** 2 + accl.y ** 2 + accl.z ** 2);
+
+                   // As we only can cover half (PI rad) of the full spectrum (2*PI rad) we multiply
+                   // the unit vector with values from [-1, 1] with PI/2, covering [-PI/2, PI/2].
+                   const scale = Math.PI / 2;
+
+                        //alpha = alpha + gyro.z * dt;
+                        alpha = (1 - zeroBias) * (alpha + gyro.z * dt);
+                        beta = bias * (beta + gyro.x * dt) + (1.0 - bias) * (accl.x * scale / norm);
+                        gamma = bias * (gamma + gyro.y * dt) + (1.0 - bias) * (accl.y * -scale / norm);
+
+                   // Do something with Euler angles (alpha, beta, gamma).
+                 };
+
+                 accl.start();
+                 gyro.start();
                 catch(err) {
                         console.log(err.message);
                         console.log("Your browser doesn't seem to support generic sensors. If you are running Chrome, please enable it in about:flags.");
@@ -460,7 +490,7 @@ createGround() {
                         let textureG = this.loader.load('road.png');     //should the callback be used here?
                         let material = new THREE.MeshBasicMaterial( { map: textureG } );
                         let ground = new Physijs.BoxMesh( geometryG, materialGround , 0);
-                        ground.position.set(0,-2.1,0);
+                        ground.position.set(0,-2.05,0);
 		        scene.add( ground );
 }
         buildRoad() {
