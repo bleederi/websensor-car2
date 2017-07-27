@@ -331,13 +331,12 @@ customElements.define("game-view", class extends HTMLElement {
                 orientation_sensor.onactivate = () => {
                 };
                 orientation_sensor.start();
-                }
                 const accl = new Accelerometer({frequency: sensorfreq});
                 const gyro = new Gyroscope({frequency: sensorfreq});
                 let timestamp = null;
                 let alpha = beta = gamma = 0;
                 const bias = 0.98;
-const zeroBias = 0.02;
+                const zeroBias = 0.02;
                 gyro.onreading = () => {
                    let dt = timestamp ? (gyro.timestamp - timestamp) / 1000 : 0;
                    timestamp = gyro.timestamp;
