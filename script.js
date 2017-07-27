@@ -399,6 +399,55 @@ seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h
                 requestAnimationFrame(() => this.render());
         }
 
+//Below from http://www.graemefulton.com/three-js-infinite-world-webgl-p1/
+
+/** 
+ * createTerrainMatrix
+ * @TODO: create the matrix of terrains - need to add 9 bits of terrain
+ */
+createTerrainMatrix(scene, perlinNoise){
+ 
+    //every 100px on the z axis, add a bit of ground
+    for ( var z= 100; z > -200; z-=100 ) {
+ 
+      //Create the perlin noise for the surface of the ground
+        var perlinSurface = new PerlinSurface(perlinNoise, 100, 100);
+      var ground = perlinSurface.surface;
+      //rotate 90 degrees around the xaxis so we can see the terrain
+      ground.rotation.x = -Math.PI/-2;
+      // Then set the z position to where it is in the loop (distance of camera)
+      ground.position.z = z;
+      ground.position.y -=4;
+ 
+      //add the ground to the scene
+      scene.add(ground);
+      //finally push it to the floor array
+      this.floor.push(ground);
+    }
+ 
+}
+
+/** 
+ * moveWithCamera
+ * when the camera gets past the first terrain, put the other in front of it
+ */
+ moveWithCamera(camera){
+    // loop through each of the 3 floors
+    for(var i=0; i<this.floor.length; i++) {
+ 
+      //if the camera has moved past the entire square, move the square
+      if((this.floor[i].position.z - 100)>camera.position.z){
+ 
+        this.floor[i].position.z-=200;
+      }
+//if the camera has moved past the entire square in the opposite direction, move the square the opposite way 
+          else if((this.floor[i].position.z + this.tileHeight)<camera.position.z){
+ 
+            this.floor[i].position.z+=(this.tileHeight*2);
+          }
+ 
+    }
+
         buildRoad() {
                 let roadx = 0;  //keep track of x coordinate for curves
                 for(let i=0; i<roadLength; i++)
