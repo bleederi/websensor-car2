@@ -75,6 +75,7 @@ var curveLength = 5;    //How many segments a curve consists of
 var obstacles = [];     //Array of the obstacles
 var segmentMeshes = [];   //Array of the segment meshes
 var carWidth = 1;
+var sea = null;
 
 //Timer
 var time=0;
@@ -314,8 +315,8 @@ customElements.define("game-view", class extends HTMLElement {
 		bumpScale: 5.0
 	});
 	var seaGeo = new THREE.PlaneGeometry(w, h);
-	var sea = new THREE.Mesh(seaGeo, seaMat);
-scene.add(sea);
+	sea = new THREE.Mesh(seaGeo, seaMat);
+        scene.add(sea);
         this.renderer.autoClear = false;
 
         //HUD
