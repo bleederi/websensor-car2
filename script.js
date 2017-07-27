@@ -305,21 +305,6 @@ customElements.define("game-view", class extends HTMLElement {
 	var skyBox = new THREE.Mesh( skyGeometry, materialArray );
         sceneSky.add( skyBox );
 
-	seaTex = THREE.ImageUtils.loadTexture("road.png");
-	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
-	seaTex.repeat.set(4, 2);
-	var seaMat = new THREE.MeshPhongMaterial({
-		specular: 0xffffff,
-		shininess: 100,
-		map: seaTex,
-		bumpMap: seaTex,
-		bumpScale: 5.0
-	});
-	var seaGeo = new THREE.PlaneGeometry(w, h);
-	sea = new THREE.Mesh(seaGeo, seaMat);
-        scene.add(sea);
-        this.renderer.autoClear = false;
-
         //HUD
         this.hud = document.createElement('div');
         this.hud.id = "hud";
@@ -358,6 +343,7 @@ customElements.define("game-view", class extends HTMLElement {
                         window.addEventListener("keydown", keypress_handler, false);
                         window.addEventListener("keyup", keyup_handler, false);
                 }
+                this.createGround();
                 this.buildRoad();
                 this.drawRoad();
                 this.createCar();
@@ -447,6 +433,36 @@ createTerrainMatrix(scene, perlinNoise){
           }
  
     }
+}
+
+createGround() {
+/*	seaTex = THREE.ImageUtils.loadTexture("road.png");
+	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
+	seaTex.repeat.set(4, 2);
+	var seaMat = new THREE.MeshPhongMaterial({
+		specular: 0xffffff,
+		shininess: 100,
+		map: seaTex,
+		bumpMap: seaTex,
+		bumpScale: 5.0
+	});
+	var seaGeo = new THREE.PlaneGeometry(w, h);
+	sea = new THREE.Mesh(seaGeo, seaMat);
+        scene.add(sea);
+        this.renderer.autoClear = false;
+*/
+                var geometry = new THREE.BoxGeometry( w, 2, h );
+                var materialRoad = Physijs.createMaterial(
+                    new THREE.MeshBasicMaterial({ color: "grey" }),
+                    friction,
+                    restitution
+                );
+                var road = new Physijs.BoxMesh(geometry, materialRoad, 0);
+                        let texture = this.loader.load('road.png');     //should the callback be used here?
+                        let material = new THREE.MeshBasicMaterial( { map: texture } );
+                        let ground = new Physijs.BoxMesh( geometry, material , 0);
+                        ground.position.set(0,0,0);
+		        scene.add( segment );
 }
         buildRoad() {
                 let roadx = 0;  //keep track of x coordinate for curves
