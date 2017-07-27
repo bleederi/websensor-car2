@@ -362,6 +362,7 @@ const zeroBias = 0.02;
 
                  accl.start();
                  gyro.start();
+                }
                 catch(err) {
                         console.log(err.message);
                         console.log("Your browser doesn't seem to support generic sensors. If you are running Chrome, please enable it in about:flags.");
