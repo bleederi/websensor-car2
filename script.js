@@ -76,6 +76,7 @@ var obstacles = [];     //Array of the obstacles
 var segmentMeshes = [];   //Array of the segment meshes
 var carWidth = 1;
 var sea = null;
+var seaTex = null;
 
 //Timer
 var time=0;
@@ -304,7 +305,7 @@ customElements.define("game-view", class extends HTMLElement {
         sceneSky.add( skyBox );
 
         var w = 10000, h = 5000;
-	var seaTex = THREE.ImageUtils.loadTexture("road.png");
+	seaTex = THREE.ImageUtils.loadTexture("road.png");
 	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
 	seaTex.repeat.set(4, 2);
 	var seaMat = new THREE.MeshPhongMaterial({
