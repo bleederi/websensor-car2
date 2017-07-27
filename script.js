@@ -457,10 +457,9 @@ createGround() {
                     friction,
                     restitution
                 );
-                var ground = new Physijs.BoxMesh(geometryG, materialGround, 0);
-                        let texture = this.loader.load('road.png');     //should the callback be used here?
-                        let material = new THREE.MeshBasicMaterial( { map: texture } );
-                        let ground = new Physijs.BoxMesh( geometry, material , 0);
+                        let textureG = this.loader.load('road.png');     //should the callback be used here?
+                        let material = new THREE.MeshBasicMaterial( { map: textureG } );
+                        let ground = new Physijs.BoxMesh( geometryG, materialGround , 0);
                         ground.position.set(0,-2,0);
 		        scene.add( ground );
 }
