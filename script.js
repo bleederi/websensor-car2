@@ -356,9 +356,9 @@ customElements.define("game-view", class extends HTMLElement {
         loop(camera, carcube) {
                 update();
 		// Infinite ocean
-		sea.position.x = camera.position.x;
-		sea.position.y = camera.position.y;
-seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
+		//sea.position.x = camera.position.x;
+		//sea.position.y = camera.position.y;
+                //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
                 scene.simulate();
                 move(camera, carcube);
                 offroad = isOffRoad(carcube);
