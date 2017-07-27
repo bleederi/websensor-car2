@@ -451,17 +451,17 @@ createGround() {
         scene.add(sea);
         this.renderer.autoClear = false;
 */
-                var geometry = new THREE.BoxGeometry( w, 2, h );
-                var materialRoad = Physijs.createMaterial(
-                    new THREE.MeshBasicMaterial({ color: "grey" }),
+                var geometryG = new THREE.BoxGeometry( 100, 2, 100 );
+                var materialGround = Physijs.createMaterial(
+                    new THREE.MeshBasicMaterial({ color: "green" }),
                     friction,
                     restitution
                 );
-                var road = new Physijs.BoxMesh(geometry, materialRoad, 0);
+                var ground = new Physijs.BoxMesh(geometryG, materialGround, 0);
                         let texture = this.loader.load('road.png');     //should the callback be used here?
                         let material = new THREE.MeshBasicMaterial( { map: texture } );
                         let ground = new Physijs.BoxMesh( geometry, material , 0);
-                        ground.position.set(0,0,0);
+                        ground.position.set(0,-2,0);
 		        scene.add( ground );
 }
         buildRoad() {
