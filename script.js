@@ -462,7 +462,7 @@ createGround() {
                         let material = new THREE.MeshBasicMaterial( { map: texture } );
                         let ground = new Physijs.BoxMesh( geometry, material , 0);
                         ground.position.set(0,0,0);
-		        scene.add( segment );
+		        scene.add( ground );
 }
         buildRoad() {
                 let roadx = 0;  //keep track of x coordinate for curves
