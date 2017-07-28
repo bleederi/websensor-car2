@@ -226,6 +226,8 @@ function move(camera, car) //Moves the car(camera)
                 }
                 camera.position.x = car.position.x;
                 camera.position.z = car.position.z + 5;
+                object.position.setX(car.position.x);
+                object.position.setZ(car.position.z);
                 car.setLinearVelocity(velocity);
         }
 }
@@ -434,7 +436,7 @@ customElements.define("game-view", class extends HTMLElement {
                 //var k = objloader.parse(object);
                 //console.log(k);
                 //object.scale.set(0.5,0.5,0.5);
-                //object.position.set(0, 2, -50);
+                object.position.set(0, 0, 0);
                    //need to push by value
                 //Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
