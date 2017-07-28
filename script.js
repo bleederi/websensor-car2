@@ -79,7 +79,7 @@ var sea = null;
 var seaTex = null;
 var w = 10000, h = 5000;
 var loaded = false;
-var texture = null;
+var texture = new Object;
 
 //Timer
 var time=0;
@@ -602,7 +602,8 @@ createGround() {
                 this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
                 object.scale.set(0.5,0.5,0.5);
                 object.position.set(0, 5, -10);
-                texture = object;
+                   //need to push by value
+                Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 //scene.add(object);
                 loaded = true;
