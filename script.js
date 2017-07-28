@@ -312,15 +312,14 @@ function createGround() {
 function createCar() {
         //Physics for any model: add model as threejs object and then add physijs box to it
         //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
-        var physGeom = new THREE.CylinderGeometry(carbb);
-        var physMaterial = Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({ color: "red" }),
-            friction,
-            restitution
-        );
-        physMaterial.visible = false;
+                var geometry = new THREE.BoxGeometry( carWidth, 1, 1 );
+                var material = Physijs.createMaterial(
+                    new THREE.MeshBasicMaterial({ color: "red" }),
+                    friction,
+                    restitution
+                );
 
-        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+        carcube = new Physijs.BoxMesh( geometry, material, mass );
         //carcube.add(texture);
         //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
         /*let carObj = objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
