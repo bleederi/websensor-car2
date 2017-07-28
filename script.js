@@ -78,6 +78,7 @@ var carWidth = 1;
 var sea = null;
 var seaTex = null;
 var w = 10000, h = 5000;
+var loaded = false;
 
 //Timer
 var time=0;
