@@ -333,6 +333,7 @@ function createCar() {
             friction,
             restitution
         );
+        material.visible = false;
         //carcube = new THREE.Object3D();
         //carcube.add( part1 );
         //carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
