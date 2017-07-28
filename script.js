@@ -436,7 +436,7 @@ customElements.define("game-view", class extends HTMLElement {
                    //need to push by value
                 //Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
-		var mesh = new Physijs.BoxMesh(
+		var mesh = new THREE.Mesh(
 			object,
 			new THREE.MeshFaceMaterial()
 		);
