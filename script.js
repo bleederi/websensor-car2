@@ -89,6 +89,7 @@ var texture = null;
 
 var hud = null;
 var carcube = null;
+var carModel = null;
 
 //Timer
 var time=0;
@@ -204,7 +205,7 @@ function getForce(roll, pitch, yaw, mode="landscape")    //Returns the force the
 }
 
 
-function move(camera, car) //Moves the car(camera)
+function move(camera, car, model) //Moves the car(camera)
 {
         if(car !== undefined) {
                 var velocity = new THREE.Vector3();
@@ -226,8 +227,8 @@ function move(camera, car) //Moves the car(camera)
                 }
                 camera.position.x = car.position.x;
                 camera.position.z = car.position.z + 5;
-                object.position.setX(car.position.x);
-                object.position.setZ(car.position.z);
+                model.position.setX(car.position.x);
+                model.position.setZ(car.position.z);
                 car.setLinearVelocity(velocity);
         }
 }
@@ -444,8 +445,9 @@ customElements.define("game-view", class extends HTMLElement {
                 //mesh.position.set(0,0,0);
                 scene.add(object);
                 console.log(object);
+                carModel = object;
                 loaded = true;
-                //console.log(texture);
+                console.log(carModel);
 	        console.log( 'Loading complete!');
                 createCar();
                 render();
