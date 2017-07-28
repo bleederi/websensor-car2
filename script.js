@@ -322,7 +322,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.position = "absolute";
         document.body.appendChild(this.hud);
 
-        this.texture = this.loadObject();
+        var texture = this.loadObject();
 
 this.manager.onLoad = function ( ) {
         var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
@@ -340,7 +340,7 @@ this.manager.onLoad = function ( ) {
 );
 
         carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        carcube.add(this.texture);
+        carcube.add(texture);
         scene.add(carcube);
         carcube.position.set(0, 0, 0);
         carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
