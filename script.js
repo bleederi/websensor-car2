@@ -599,7 +599,7 @@ createGround() {
                 physMaterial.visible = false;
 
                 this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-                this.carcube.add(threeObject);
+                //this.carcube.add(threeObject);
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
