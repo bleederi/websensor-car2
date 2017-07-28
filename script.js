@@ -591,7 +591,7 @@ createGround() {
         createCar(carcube) {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
-        carmesh = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
+        this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
         object.scale.set(0.5,0.5,0.5);
         //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
         //scene.add(object);
@@ -610,7 +610,7 @@ createGround() {
 );
 
         carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        carcube.add(carmesh);
+        carcube.add(object);
         carcube.position.set(0, 0, 0);
         carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
         scene.add( carcube );
