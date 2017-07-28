@@ -322,7 +322,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.loadObject();
         //scene.add(texture);
         //scene.add(this.texture);
-        //console.log(this.texture);
+        console.log(texture);
 
         this.carcube = null;
 
@@ -599,18 +599,17 @@ createGround() {
         }
 
         loadObject() {
-                let x = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
+                texture = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
                 object.scale.set(0.5,0.5,0.5);
                 object.position.set(0, 5, -10);
                    //need to push by value
-                Object.assign(texture, object);
+                //Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 scene.add(object);
                 console.log(object);
                 loaded = true;
                 return object;
     });
-                console.log(x);
         }
         createCar() {
                 //Physics for any model: add model as threejs object and then add physijs box to it
