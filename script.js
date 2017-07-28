@@ -59,6 +59,7 @@ var offroad = false;
 //Rendering vars (Three.JS)
 var scene = null;
 var sceneSky = null;   //separate scene for the skybox
+var cameraSky = null;
 var renderer = null;
 var camera = null;
 
@@ -86,6 +87,7 @@ var w = 10000, h = 5000;
 var loaded = false;
 var texture = null;
 
+var hud = null;
 var carcube = null;
 
 //Timer
@@ -337,8 +339,23 @@ function createCar() {
         carcube.setDamping(0.1, 0.1);
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
         carcube.applyCentralImpulse(forcev2);
-        }
+}
 
+
+render() {
+
+        //Render HUD
+        hud.innerHTML = -Math.floor(carcube.position.z);
+        //For some reason need to always update the position to avoid the HUD disappearing
+        hud.style.left = gameview.offsetLeft + 20 + "px";
+        hud.style.top = gameview.offsetTop + 60 + "px";
+
+                camera.lookAt(carcube.position);
+                // Render loop
+                renderer.render( sceneSky, cameraSky );  //skybox
+                renderer.render(scene, camera);
+                requestAnimationFrame(() => render());
+}
 
 //The custom element where the game will be rendered
 customElements.define("game-view", class extends HTMLElement {
@@ -365,7 +382,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.objloader = new THREE.ObjectLoader(this.manager);
 	
         //skybox
-        this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+        cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
         sceneSky = new Physijs.Scene();
 	var imgFolder = "bg/";
 	var directions  = ["left", "right", "top", "bot", "back", "front"];
@@ -383,13 +400,13 @@ customElements.define("game-view", class extends HTMLElement {
         sceneSky.add( skyBox );
 
         //HUD
-        this.hud = document.createElement('div');
-        this.hud.id = "hud";
-        this.hud.innerHTML = "haHAA";
-        this.hud.style.left = gameview.offsetLeft + 20 + "px";
-        this.hud.style.top = gameview.offsetTop + 60 + "px";
-        this.hud.style.position = "absolute";
-        document.body.appendChild(this.hud);
+        hud = document.createElement('div');
+        hud.id = "hud";
+        hud.innerHTML = "haHAA";
+        hud.style.left = gameview.offsetLeft + 20 + "px";
+        hud.style.top = gameview.offsetTop + 60 + "px";
+        hud.style.position = "absolute";
+        document.body.appendChild(hud);
 
         this.loadObject();
         //scene.add(texture);
@@ -465,7 +482,7 @@ customElements.define("game-view", class extends HTMLElement {
                 this.drawRoad();
                 createCar();
                 this.createObstacles();
-                this.render();
+                render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
                 loopvar = setInterval(this.loop.bind(null, camera, carcube), step);
         }
@@ -490,20 +507,6 @@ customElements.define("game-view", class extends HTMLElement {
                 speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit             
         }
 
-        render() {
-
-        //Render HUD
-        this.hud.innerHTML = -Math.floor(carcube.position.z);
-        //For some reason need to always update the position to avoid the HUD disappearing
-        this.hud.style.left = gameview.offsetLeft + 20 + "px";
-        this.hud.style.top = gameview.offsetTop + 60 + "px";
-
-                camera.lookAt(carcube.position);
-                // Render loop
-                renderer.render( sceneSky, this.cameraSky );  //skybox
-                renderer.render(scene, camera);
-                requestAnimationFrame(() => this.render());
-        }
 
 //Below from http://www.graemefulton.com/three-js-infinite-world-webgl-p1/
 
