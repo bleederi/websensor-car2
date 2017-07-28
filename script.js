@@ -382,7 +382,7 @@ customElements.define("game-view", class extends HTMLElement {
                 this.createGround();
                 this.buildRoad();
                 this.drawRoad();
-                this.createCar();
+                this.createCar(this.carcube);
                 this.createObstacles();
                 this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
@@ -588,7 +588,7 @@ createGround() {
 		        scene.add( segment );
                 }
         }
-        createCar() {
+        createCar(carcube) {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
         carmesh = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
@@ -609,14 +609,14 @@ createGround() {
             restitution
 );
 
-        this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        this.carcube.add(carmesh);
-        this.carcube.position.set(0, 0, 0);
-        this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
-        scene.add( this.carcube );
-        this.carcube.setDamping(0.1, 0.1);
+        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+        carcube.add(carmesh);
+        carcube.position.set(0, 0, 0);
+        carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
+        scene.add( carcube );
+        carcube.setDamping(0.1, 0.1);
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
-        this.carcube.applyCentralImpulse(forcev2);
+        carcube.applyCentralImpulse(forcev2);
         loaded = true;
     });
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
