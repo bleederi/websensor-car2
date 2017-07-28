@@ -232,9 +232,12 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 model.position.setZ(car.position.z);
                 model.position.setY(car.position.y);
                 //model.rotation.set(car.rotation);
-                model.rotateX(car.rotation.x-model.rotation.x);
-                model.rotateY(car.rotation.y-model.rotation.y+Math.PI/2);
-                model.rotateZ(car.rotation.z-model.rotation.z);
+                model.rotation.x = car.rotation.x;
+                model.rotation.y = car.rotation.y;
+                model.rotation.z = car.rotation.z;
+                //model.rotation.set(car.rotation.x, car.rotation.y, car.rotation.z );
+                //model.rotateY(car.rotation.y-model.rotation.y);
+                //model.rotateZ(car.rotation.z-model.rotation.z);
                 car.setLinearVelocity(velocity);
         }
 }
