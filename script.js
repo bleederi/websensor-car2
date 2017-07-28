@@ -431,8 +431,8 @@ customElements.define("game-view", class extends HTMLElement {
 
         this.loadObject();
                 objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object) {
-                var k = objloader.parse(object);
-                console.log(k);
+                //var k = objloader.parse(object);
+                //console.log(k);
                 //object.scale.set(0.5,0.5,0.5);
                 //object.position.set(0, 2, -50);
                    //need to push by value
