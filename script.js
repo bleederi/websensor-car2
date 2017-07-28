@@ -286,7 +286,7 @@ customElements.define("game-view", class extends HTMLElement {
 	this.camera.position.z = 2;
 
         this.loader = new THREE.TextureLoader();
-        this.objloader = new THREE.ObjectLoader();
+        this.objloader = new THREE.JSONLoader();
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
