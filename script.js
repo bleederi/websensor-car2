@@ -316,7 +316,7 @@ customElements.define("game-view", class extends HTMLElement {
         document.body.appendChild(this.hud);
 
         this.texture = this.loadObject();
-        scene.add(this.texture);
+        //scene.add(this.texture);
         console.log(this.texture);
 
         this.carcube = null;
