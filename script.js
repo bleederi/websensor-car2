@@ -86,6 +86,8 @@ var w = 10000, h = 5000;
 var loaded = false;
 var texture = null;
 
+var carcube = null;
+
 //Timer
 var time=0;
 var timerVar = null;
@@ -358,7 +360,6 @@ customElements.define("game-view", class extends HTMLElement {
         //scene.add(this.texture);
         console.log(texture);
 
-        this.carcube = null;
 
         this.manager.onLoad = function ( ) {
                 console.log(texture);
@@ -430,7 +431,7 @@ customElements.define("game-view", class extends HTMLElement {
                 this.createObstacles();
                 this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-                loopvar = setInterval(this.loop.bind(null, camera, this.carcube), step);
+                loopvar = setInterval(this.loop.bind(null, camera, carcube), step);
         }
         //Main loop
         loop(camera, carcube) {
@@ -456,12 +457,12 @@ customElements.define("game-view", class extends HTMLElement {
         render() {
 
         //Render HUD
-        this.hud.innerHTML = -Math.floor(this.carcube.position.z);
+        this.hud.innerHTML = -Math.floor(carcube.position.z);
         //For some reason need to always update the position to avoid the HUD disappearing
         this.hud.style.left = gameview.offsetLeft + 20 + "px";
         this.hud.style.top = gameview.offsetTop + 60 + "px";
 
-                camera.lookAt(this.carcube.position);
+                camera.lookAt(carcube.position);
                 // Render loop
                 renderer.render( sceneSky, this.cameraSky );  //skybox
                 renderer.render(scene, camera);
@@ -629,8 +630,8 @@ customElements.define("game-view", class extends HTMLElement {
                 );
                 physMaterial.visible = false;
 
-                this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-                //this.carcube.add(threeObject);
+                carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+                //carcube.add(threeObject);
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
@@ -643,15 +644,15 @@ customElements.define("game-view", class extends HTMLElement {
                     friction,
                     restitution
 );
-                //this.carcube = new THREE.Object3D();
-                //this.carcube.add( part1 );
-                //this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
-                this.carcube.position.set(0, 0, 0);
-                this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
-	        scene.add( this.carcube );
-                this.carcube.setDamping(0.1, 0.1);
+                //carcube = new THREE.Object3D();
+                //carcube.add( part1 );
+                //carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
+                carcube.position.set(0, 0, 0);
+                carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
+	        scene.add( carcube );
+                carcube.setDamping(0.1, 0.1);
                 var forcev2 = {x: 0, y: 0, z: -1000*speed};
-                this.carcube.applyCentralImpulse(forcev2);
+                carcube.applyCentralImpulse(forcev2);
         }
 
         createObstacles() {     //Create obstacles that the player has to avoid crashing into
