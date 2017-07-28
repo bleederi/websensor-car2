@@ -440,7 +440,7 @@ customElements.define("game-view", class extends HTMLElement {
                 object.position.set(0, 1, -2);
                    //need to push by value
                 //Object.assign(texture, object);
-                object.rotation.set(new THREE.Vector3( Math.PI / 2, 0, 0));
+                //object.rotation.set(new THREE.Vector3( Math.PI / 2, 0, 0));
 		//var mesh = new THREE.Mesh(object);
                 object.position.set(0,0,-2);
                 scene.add(object);
