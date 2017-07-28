@@ -325,7 +325,23 @@ customElements.define("game-view", class extends HTMLElement {
         this.texture = this.loadObject();
 
 this.manager.onLoad = function ( ) {
+        var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
+        var physMaterial = Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({ color: "red" }),
+            friction,
+            restitution
+        );
+        physMaterial.visible = false;
+
+        var material = Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({ color: "red" }),
+            friction,
+            restitution
+);
+
+        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
         carcube.add(this.texture);
+        scene.add(carcube);
 	console.log( 'Loading complete!');
 };
 
@@ -611,24 +627,8 @@ createGround() {
         createCar() {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
-        var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
-        var physMaterial = Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({ color: "red" }),
-            friction,
-            restitution
-        );
-        physMaterial.visible = false;
-
-        var material = Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({ color: "red" }),
-            friction,
-            restitution
-);
-
-        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
         carcube.position.set(0, 0, 0);
         carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
-        scene.add( carcube );
         carcube.setDamping(0.1, 0.1);
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
         carcube.applyCentralImpulse(forcev2);
