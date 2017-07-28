@@ -396,8 +396,8 @@ customElements.define("game-view", class extends HTMLElement {
 		//sea.position.y = camera.position.y;
                 //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
                 threeObject.position.x = camera.position.x;
-                threeObject.position.y = camera.position.y;
-                threeObject.position.z = camera.position.z-50;                
+                threeObject.position.y = camera.position.y+5;
+                threeObject.position.z = camera.position.z-5;                
                 scene.simulate();
                 move(camera, carcube);
                 offroad = isOffRoad(carcube);
