@@ -230,7 +230,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 camera.position.z = car.position.z + 5;
                 model.position.setX(car.position.x);
                 model.position.setZ(car.position.z);
-                model.position.setY(car.position.y);
+                model.position.setY(car.position.y-1);
                 car.setLinearVelocity(velocity);
         }
 }
