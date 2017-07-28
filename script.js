@@ -336,6 +336,7 @@ function createCar() {
         carcube.position.set(0, 0, 0);
         carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
         scene.add( carcube );
+        scene.add(carModel);
         carcube.material.transparent = true;
         carcube.material.opacity = 0;
         //carcube.visible = false;
@@ -444,7 +445,7 @@ customElements.define("game-view", class extends HTMLElement {
                 //object.rotation.set(new THREE.Vector3( Math.PI / 2, 0, 0));
 		//var mesh = new THREE.Mesh(object);
                 object.rotateY(Math.PI/2);
-                scene.add(object);
+                //scene.add(object);
                 carbb = new THREE.Box3().setFromObject(object);
                 console.log(carbb);
                 carModel = object;
