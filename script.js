@@ -416,14 +416,14 @@ customElements.define("game-view", class extends HTMLElement {
                 this.renderer.render(scene, this.camera);
                 requestAnimationFrame(() => this.render());
         }
-/*
+
 //Below from http://www.graemefulton.com/three-js-infinite-world-webgl-p1/
 
 /** 
  * createTerrainMatrix
  * @TODO: create the matrix of terrains - need to add 9 bits of terrain
  */
-createTerrainMatrix(scene, perlinNoise){
+/*createTerrainMatrix(scene, perlinNoise){
  
     //every 100px on the z axis, add a bit of ground
     for ( var z= 100; z > -200; z-=100 ) {
@@ -443,13 +443,13 @@ createTerrainMatrix(scene, perlinNoise){
       this.floor.push(ground);
     }
  
-}
+}*/
 
 /** 
  * moveWithCamera
  * when the camera gets past the first terrain, put the other in front of it
  */
- moveWithCamera(camera){
+ /*moveWithCamera(camera){
     // loop through each of the 3 floors
     for(var i=0; i<this.floor.length; i++) {
  
