@@ -79,6 +79,7 @@ var sea = null;
 var seaTex = null;
 var w = 10000, h = 5000;
 var loaded = false;
+var carmesh = null;
 
 //Timer
 var time=0;
@@ -291,7 +292,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.objloader = new THREE.ObjectLoader();
 
         this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
-        var carmesh = new THREE.Mesh(geometry);
+        carmesh = new THREE.Mesh(geometry);
         scene.add(carmesh);
         loaded = true;
     });
