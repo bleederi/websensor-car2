@@ -484,7 +484,7 @@ customElements.define("game-view", class extends HTMLElement {
     }
 }
 */
-createGround = function() {
+function createGround() {
 /*	seaTex = THREE.ImageUtils.loadTexture("road.png");
 	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
 	seaTex.repeat.set(4, 2);
