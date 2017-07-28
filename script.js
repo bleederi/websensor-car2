@@ -303,6 +303,42 @@ function createGround() {
 		        scene.add( ground );
 }
 
+function createCar() {
+        //Physics for any model: add model as threejs object and then add physijs box to it
+        //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
+        var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
+        var physMaterial = Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({ color: "red" }),
+            friction,
+            restitution
+        );
+        physMaterial.visible = false;
+
+        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+        //carcube.add(threeObject);
+        //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
+        /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
+		        scene.add( obj );
+		        },
+                        );*/
+        //var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
+        //let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
+        var material = Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({ color: "red" }),
+            friction,
+            restitution
+        );
+        //carcube = new THREE.Object3D();
+        //carcube.add( part1 );
+        //carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
+        carcube.position.set(0, 0, 0);
+        carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
+        scene.add( carcube );
+        carcube.setDamping(0.1, 0.1);
+        var forcev2 = {x: 0, y: 0, z: -1000*speed};
+        carcube.applyCentralImpulse(forcev2);
+        }
+
 
 //The custom element where the game will be rendered
 customElements.define("game-view", class extends HTMLElement {
@@ -427,7 +463,7 @@ customElements.define("game-view", class extends HTMLElement {
                 createGround();
                 this.buildRoad();
                 this.drawRoad();
-                this.createCar();
+                createCar();
                 this.createObstacles();
                 this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
@@ -618,41 +654,6 @@ customElements.define("game-view", class extends HTMLElement {
                 loaded = true;
                 return object;
     });
-        }
-        createCar() {
-                //Physics for any model: add model as threejs object and then add physijs box to it
-                //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
-                var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
-                var physMaterial = Physijs.createMaterial(
-                    new THREE.MeshBasicMaterial({ color: "red" }),
-                    friction,
-                    restitution
-                );
-                physMaterial.visible = false;
-
-                carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-                //carcube.add(threeObject);
-                //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
-                /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
-    				scene.add( obj );
-    				},
-                                );*/
-                //var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
-                //let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
-                var material = Physijs.createMaterial(
-                    new THREE.MeshBasicMaterial({ color: "red" }),
-                    friction,
-                    restitution
-);
-                //carcube = new THREE.Object3D();
-                //carcube.add( part1 );
-                //carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
-                carcube.position.set(0, 0, 0);
-                carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
-	        scene.add( carcube );
-                carcube.setDamping(0.1, 0.1);
-                var forcev2 = {x: 0, y: 0, z: -1000*speed};
-                carcube.applyCentralImpulse(forcev2);
         }
 
         createObstacles() {     //Create obstacles that the player has to avoid crashing into
