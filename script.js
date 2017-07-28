@@ -603,11 +603,10 @@ createGround() {
                 );
                 physMaterial.visible = false;
 
-                carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-                carcube.add(carmesh);
+                this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+                this.carcube.add(carmesh);
         loaded = true;
     });
-        this.carcube = carcube;
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
