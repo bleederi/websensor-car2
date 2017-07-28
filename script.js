@@ -602,9 +602,6 @@ createGround() {
                     restitution
                 );
                 physMaterial.visible = false;
-
-                this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-                this.carcube.add(carmesh);
         loaded = true;
     });
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
@@ -619,9 +616,9 @@ createGround() {
                     friction,
                     restitution
 );
-                //this.carcube = new THREE.Object3D();
-                //this.carcube.add( part1 );
-                //this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
+
+                this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+                this.carcube.add(carmesh);
                 this.carcube.position.set(0, 0, 0);
                 this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
 	        scene.add( this.carcube );
