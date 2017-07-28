@@ -580,13 +580,26 @@ createGround() {
                 }
         }
         createCar() {
-                //var geometry = new THREE.BoxGeometry( carWidth, 1, 1 );
+                //Physics for any model: add model as threejs object and then add physijs box to it
+                let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
+                let threeMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+                let threeObject = new THREE.Mesh(threeGeom, threeMaterial);
+                var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
+                var physMaterial = Physijs.createMaterial(
+                    new THREE.MeshBasicMaterial({ color: "red" }),
+                    friction,
+                    restitution
+                );
+                physMaterial.visible = false;
+
+                this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+                this.carcube.add(threeObject);
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
     				},
                                 );*/
-                var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
+                //var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 //let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
                 var material = Physijs.createMaterial(
                     new THREE.MeshBasicMaterial({ color: "red" }),
@@ -595,7 +608,7 @@ createGround() {
 );
                 //this.carcube = new THREE.Object3D();
                 //this.carcube.add( part1 );
-                this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
+                //this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
                 this.carcube.position.set(0, 0, 0);
                 this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
 	        scene.add( this.carcube );
