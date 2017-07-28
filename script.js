@@ -428,7 +428,10 @@ customElements.define("game-view", class extends HTMLElement {
                 this.camera.lookAt(this.carcube.position);
                 // Render loop
                 this.renderer.render( sceneSky, this.cameraSky );  //skybox
-                this.renderer.render(scene, this.camera);
+                if(loaded)
+                {
+                        this.renderer.render(scene, this.camera);
+                }                
                 requestAnimationFrame(() => this.render());
         }
 
