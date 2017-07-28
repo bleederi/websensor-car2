@@ -586,6 +586,9 @@ createGround() {
                 let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 let threeMaterial = new THREE.MeshBasicMaterial();
                 let threeObject = new THREE.Mesh(threeGeom, threeMaterial);
+                threeObject.position.x = 5;
+                threeObject.position.y = 5;
+                threeObject.position.z = -50;
                 var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
                 var physMaterial = Physijs.createMaterial(
                     new THREE.MeshBasicMaterial({ color: "red" }),
@@ -596,6 +599,7 @@ createGround() {
 
                 this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
                 this.carcube.add(threeObject);
+                scene.add(threeObject);
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
@@ -613,7 +617,7 @@ createGround() {
                 //this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
                 this.carcube.position.set(0, 0, 0);
                 this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
-	        scene.add( threeObject );
+	        scene.add( this.carcube );
                 this.carcube.setDamping(0.1, 0.1);
                 var forcev2 = {x: 0, y: 0, z: -1000*speed};
                 this.carcube.applyCentralImpulse(forcev2);
