@@ -323,10 +323,9 @@ customElements.define("game-view", class extends HTMLElement {
         document.body.appendChild(this.hud);
 
         this.texture = this.loadObject();
-        this.carcube = null;
 
 this.manager.onLoad = function ( ) {
-        this.carcube.add(this.texture);
+        carcube.add(this.texture);
 	console.log( 'Loading complete!');
 
 };
@@ -393,11 +392,11 @@ this.manager.onLoad = function ( ) {
                 this.createGround();
                 this.buildRoad();
                 this.drawRoad();
-                this.createCar(this.carcube);
+                this.createCar(carcube);
                 this.createObstacles();
                 this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube, this.threeObject), step);
+                loopvar = setInterval(this.loop.bind(null, this.camera, carcube, this.threeObject), step);
         }
         //Main loop
         loop(camera, carcube, threeObject) {
@@ -424,12 +423,12 @@ this.manager.onLoad = function ( ) {
         render() {
 
         //Render HUD
-        this.hud.innerHTML = -Math.floor(this.carcube.position.z);
+        this.hud.innerHTML = -Math.floor(carcube.position.z);
         //For some reason need to always update the position to avoid the HUD disappearing
         this.hud.style.left = gameview.offsetLeft + 20 + "px";
         this.hud.style.top = gameview.offsetTop + 60 + "px";
 
-                this.camera.lookAt(this.carcube.position);
+                this.camera.lookAt(carcube.position);
                 // Render loop
                 this.renderer.render( sceneSky, this.cameraSky );  //skybox
                 this.renderer.render(scene, this.camera);        
@@ -627,13 +626,13 @@ createGround() {
             restitution
 );
 
-        this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        this.carcube.position.set(0, 0, 0);
-        this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
-        scene.add( this.carcube );
-        this.carcube.setDamping(0.1, 0.1);
+        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+        carcube.position.set(0, 0, 0);
+        carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
+        scene.add( carcube );
+        carcube.setDamping(0.1, 0.1);
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
-        this.carcube.applyCentralImpulse(forcev2);
+        carcube.applyCentralImpulse(forcev2);
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
     				},
