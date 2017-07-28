@@ -229,7 +229,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 camera.position.x = car.position.x;
                 camera.position.z = car.position.z + 5;
                 model.position.setX(car.position.x);
-                model.position.setZ(car.position.z);
+                model.position.setZ(car.position.z-5);
                 model.position.setY(car.position.y-0.5);
                 model.rotation.set(car.rotation);
                 car.setLinearVelocity(velocity);
@@ -440,7 +440,7 @@ customElements.define("game-view", class extends HTMLElement {
                 objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object) {
                 //var k = objloader.parse(object);
                 //console.log(k);
-                //object.scale.set(0.5,0.5,0.5);
+                object.scale.set(0.5,0.5,0.5);
                 object.position.set(0, -1, -2);      //should set according to road
                    //need to push by value
                 //Object.assign(texture, object);
