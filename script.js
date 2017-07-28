@@ -277,6 +277,12 @@ customElements.define("game-view", class extends HTMLElement {
         gameview = document.body.appendChild(this.renderer.domElement);
         
         scene = new Physijs.Scene();
+
+        let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
+        let threeMaterial = new THREE.MeshFaceMaterial(threeGeom.materials);
+        this.threeObject = new THREE.Mesh(threeGeom, threeMaterial);
+        scene.add(this.threeObject);
+
         scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
 
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 200);
@@ -316,10 +322,6 @@ customElements.define("game-view", class extends HTMLElement {
         document.body.appendChild(this.hud);
 
         this.carcube = null;
-                let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
-                let threeMaterial = new THREE.MeshBasicMaterial();
-                this.threeObject = new THREE.Mesh(threeGeom, threeMaterial);
-                scene.add(this.threeObject);
         }
 
         connectedCallback() {
