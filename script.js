@@ -592,7 +592,7 @@ createGround() {
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
         carmesh = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
         object.scale.set(0.5,0.5,0.5);
-        object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
+        //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
         scene.add(object);
         loaded = true;
     });
