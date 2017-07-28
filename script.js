@@ -318,8 +318,8 @@ customElements.define("game-view", class extends HTMLElement {
         this.carcube = null;
                 let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 let threeMaterial = new THREE.MeshBasicMaterial();
-                var threeObject = new THREE.Mesh(threeGeom, threeMaterial);
-                scene.add(threeObject);
+                this.threeObject = new THREE.Mesh(threeGeom, threeMaterial);
+                scene.add(this.threeObject);
         }
 
         connectedCallback() {
@@ -386,10 +386,10 @@ customElements.define("game-view", class extends HTMLElement {
                 this.createObstacles();
                 this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube), step);
+                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube, this.threeObject), step);
         }
         //Main loop
-        loop(camera, carcube) {
+        loop(camera, carcube, threeObject) {
                 update();
 		// Infinite ocean
 		//sea.position.x = camera.position.x;
