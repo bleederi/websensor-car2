@@ -445,7 +445,7 @@ customElements.define("game-view", class extends HTMLElement {
                 object.position.set(0,-2,-2);
                 scene.add(object);
                 let carbb = new THREE.Box3().setFromObject(object);
-                console.log(bb);
+                console.log(carbb);
                 carModel = object;
                 loaded = true;
                 console.log(carModel);
