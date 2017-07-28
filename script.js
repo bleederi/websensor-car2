@@ -443,7 +443,7 @@ this.manager.onLoad = function ( ) {
         render() {
 
         //Render HUD
-        this.hud.innerHTML = -Math.floor(carcube.position.z);
+        //this.hud.innerHTML = -Math.floor(carcube.position.z);
         //For some reason need to always update the position to avoid the HUD disappearing
         this.hud.style.left = gameview.offsetLeft + 20 + "px";
         this.hud.style.top = gameview.offsetTop + 60 + "px";
