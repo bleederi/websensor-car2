@@ -289,11 +289,12 @@ customElements.define("game-view", class extends HTMLElement {
 	this.camera.position.z = 2;
 
         this.loader = new THREE.TextureLoader();
-        this.objloader = new THREE.ObjectLoader();
+        this.objloader = new THREE.JSONLoader();
 
         this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
         carmesh = new THREE.Mesh(geometry);
         scene.add(carmesh);
+        this.renderer.render(scene, this.camera);
         loaded = true;
     });
 	
@@ -428,10 +429,7 @@ customElements.define("game-view", class extends HTMLElement {
                 this.camera.lookAt(this.carcube.position);
                 // Render loop
                 this.renderer.render( sceneSky, this.cameraSky );  //skybox
-                if(loaded)
-                {
-                        this.renderer.render(scene, this.camera);
-                }                
+                this.renderer.render(scene, this.camera);            
                 requestAnimationFrame(() => this.render());
         }
 
