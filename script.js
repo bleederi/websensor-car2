@@ -440,11 +440,12 @@ customElements.define("game-view", class extends HTMLElement {
                 object.position.set(0, 0, 0);
                    //need to push by value
                 //Object.assign(texture, object);
-                object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
+                //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
 		//var mesh = new THREE.Mesh(object);
-                object.position.set(0,-2,0);
+                object.position.set(0,-2,-2);
                 scene.add(object);
-                console.log(object);
+                let carbb = new THREE.Box3().setFromObject(object);
+                console.log(bb);
                 carModel = object;
                 loaded = true;
                 console.log(carModel);
