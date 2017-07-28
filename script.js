@@ -316,6 +316,10 @@ customElements.define("game-view", class extends HTMLElement {
         document.body.appendChild(this.hud);
 
         this.carcube = null;
+                let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
+                let threeMaterial = new THREE.MeshBasicMaterial();
+                var threeObject = new THREE.Mesh(threeGeom, threeMaterial);
+                scene.add(threeObject);
         }
 
         connectedCallback() {
@@ -586,9 +590,6 @@ createGround() {
         createCar() {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
-                let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
-                let threeMaterial = new THREE.MeshBasicMaterial();
-                var threeObject = new THREE.Mesh(threeGeom, threeMaterial);
                 var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
                 var physMaterial = Physijs.createMaterial(
                     new THREE.MeshBasicMaterial({ color: "red" }),
@@ -599,7 +600,6 @@ createGround() {
 
                 this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
                 this.carcube.add(threeObject);
-                scene.add(threeObject);
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
