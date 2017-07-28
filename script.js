@@ -326,6 +326,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.carcube = null;
 
 this.manager.onLoad = function ( ) {
+        this.carcube.add(this.texture);
 	console.log( 'Loading complete!');
 
 };
