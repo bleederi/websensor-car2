@@ -289,7 +289,7 @@ customElements.define("game-view", class extends HTMLElement {
 	this.camera.position.z = 2;
 
         this.loader = new THREE.TextureLoader();
-        this.objloader = new THREE.JSONLoader();
+        this.objloader = new THREE.ObjectLoader();
 
         this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
         carmesh = new THREE.Mesh(geometry);
