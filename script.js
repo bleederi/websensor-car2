@@ -442,7 +442,7 @@ customElements.define("game-view", class extends HTMLElement {
                 //Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( Math.PI / 2, 0, 0));
 		//var mesh = new THREE.Mesh(object);
-                object.position.set(0,0,-2);
+                object.rotateX(Math.PI/2);
                 scene.add(object);
                 let carbb = new THREE.Box3().setFromObject(object);
                 console.log(carbb);
