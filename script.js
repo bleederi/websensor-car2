@@ -78,9 +78,6 @@ var carWidth = 1;
 var sea = null;
 var seaTex = null;
 var w = 10000, h = 5000;
-var loaded = false;
-var carmesh = null;
-var carcube = null;
 
 //Timer
 var time=0;
@@ -280,7 +277,6 @@ customElements.define("game-view", class extends HTMLElement {
         gameview = document.body.appendChild(this.renderer.domElement);
         
         scene = new Physijs.Scene();
-
         scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
 
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 200);
@@ -289,11 +285,8 @@ customElements.define("game-view", class extends HTMLElement {
 	this.camera.position.y = 1;
 	this.camera.position.z = 2;
 
-        this.manager = new THREE.LoadingManager();
-
-        this.loader = new THREE.TextureLoader(this.manager);
-        this.objloader = new THREE.ObjectLoader(this.manager);
-
+        this.loader = new THREE.TextureLoader();
+        this.objloader = new THREE.ObjectLoader();
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -322,16 +315,11 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.position = "absolute";
         document.body.appendChild(this.hud);
 
-        this.texture = this.loadObject();
-
-this.manager.onLoad = function ( ) {
-        if(carcube)
-        {
-        //carcube.add(this.texture);
-	console.log( 'Loading complete!');
-        }
-};
-
+        this.carcube = null;
+                let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
+                let threeMaterial = new THREE.MeshBasicMaterial();
+                this.threeObject = new THREE.Mesh(threeGeom, threeMaterial);
+                scene.add(this.threeObject);
         }
 
         connectedCallback() {
@@ -394,46 +382,45 @@ this.manager.onLoad = function ( ) {
                 this.createGround();
                 this.buildRoad();
                 this.drawRoad();
-                this.createCar(carcube);
+                this.createCar();
                 this.createObstacles();
                 this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-                loopvar = setInterval(this.loop.bind(null, this.camera, carcube, this.threeObject), step);
+                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube, this.threeObject), step);
         }
         //Main loop
         loop(camera, carcube, threeObject) {
-                if(loaded)
+                update();
+		// Infinite ocean
+		//sea.position.x = camera.position.x;
+		//sea.position.y = camera.position.y;
+                //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
+                threeObject.position.x = camera.position.x;
+                threeObject.position.y = camera.position.y;
+                threeObject.position.z = camera.position.z-50;                
+                scene.simulate();
+                move(camera, carcube);
+                offroad = isOffRoad(carcube);
+                if(offroad)
                 {
-                        update();
-		        // Infinite ocean
-		        //sea.position.x = camera.position.x;
-		        //sea.position.y = camera.position.y;
-                        //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
-                        //carmesh.position.set(0, 5, -100);              
-                        scene.simulate();
-                        move(camera, carcube);
-                        offroad = isOffRoad(carcube);
-                        if(offroad)
-                        {
-                                console.log("Offroad");
-                                gameOver();         
-                        }   
-                        speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit    
-                }         
+                        console.log("Offroad");
+                        gameOver();         
+                }   
+                speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit             
         }
 
         render() {
 
         //Render HUD
-        this.hud.innerHTML = -Math.floor(carcube.position.z);
+        this.hud.innerHTML = -Math.floor(this.carcube.position.z);
         //For some reason need to always update the position to avoid the HUD disappearing
         this.hud.style.left = gameview.offsetLeft + 20 + "px";
         this.hud.style.top = gameview.offsetTop + 60 + "px";
 
-                this.camera.lookAt(carcube.position);
+                this.camera.lookAt(this.carcube.position);
                 // Render loop
                 this.renderer.render( sceneSky, this.cameraSky );  //skybox
-                this.renderer.render(scene, this.camera);        
+                this.renderer.render(scene, this.camera);
                 requestAnimationFrame(() => this.render());
         }
 
@@ -600,47 +587,40 @@ createGround() {
 		        scene.add( segment );
                 }
         }
-        loadObject() {
-                let obj = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
-                object.scale.set(0.5,0.5,0.5);
-                object.position.set(0, 5, -10);
-                //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
-                //scene.add(object);
-                loaded = true;
-                return obj;
-    });
-                //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
-        }
-        createCar(carcube) {
+        createCar() {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
-        var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
-        var physMaterial = Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({ color: "red" }),
-            friction,
-            restitution
-        );
-        physMaterial.visible = false;
+                var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
+                var physMaterial = Physijs.createMaterial(
+                    new THREE.MeshBasicMaterial({ color: "red" }),
+                    friction,
+                    restitution
+                );
+                physMaterial.visible = false;
 
-        var material = Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({ color: "red" }),
-            friction,
-            restitution
-);
-
-        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        carcube.position.set(0, 0, 0);
-        carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
-        scene.add( carcube );
-        carcube.setDamping(0.1, 0.1);
-        var forcev2 = {x: 0, y: 0, z: -1000*speed};
-        carcube.applyCentralImpulse(forcev2);
+                this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+                //this.carcube.add(threeObject);
+                //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
     				},
                                 );*/
                 //var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 //let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
+                var material = Physijs.createMaterial(
+                    new THREE.MeshBasicMaterial({ color: "red" }),
+                    friction,
+                    restitution
+);
+                //this.carcube = new THREE.Object3D();
+                //this.carcube.add( part1 );
+                //this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
+                this.carcube.position.set(0, 0, 0);
+                this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
+	        scene.add( this.carcube );
+                this.carcube.setDamping(0.1, 0.1);
+                var forcev2 = {x: 0, y: 0, z: -1000*speed};
+                this.carcube.applyCentralImpulse(forcev2);
         }
 
         createObstacles() {     //Create obstacles that the player has to avoid crashing into
