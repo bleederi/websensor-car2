@@ -329,7 +329,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.manager.onLoad = function ( ) {
                 console.log(texture);
 	        console.log( 'Loading complete!');
-                this.createGround();
+                createGround();
                 this.buildRoad();
                 this.drawRoad();
                 this.createCar();
@@ -484,7 +484,7 @@ customElements.define("game-view", class extends HTMLElement {
     }
 }
 */
-createGround() {
+createGround = function() {
 /*	seaTex = THREE.ImageUtils.loadTexture("road.png");
 	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
 	seaTex.repeat.set(4, 2);
