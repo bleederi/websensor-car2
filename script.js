@@ -580,8 +580,10 @@ createGround() {
         }
         createCar() {
                 var geometry = new THREE.BoxGeometry( carWidth, 1, 1 );
+                //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
+                let textureCar = this.loader.load('carmodel/lamborghini-aventador-pbribl.json');
                 var material = Physijs.createMaterial(
-                    new THREE.MeshBasicMaterial({ color: "red" }),
+                    textureCar,
                     friction,
                     restitution
                 );
