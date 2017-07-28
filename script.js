@@ -291,6 +291,8 @@ customElements.define("game-view", class extends HTMLElement {
 
         this.loader = new THREE.TextureLoader();
         this.objloader = new THREE.ObjectLoader();
+
+        this.manager = new THREE.LoadingManager();
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -321,6 +323,13 @@ customElements.define("game-view", class extends HTMLElement {
 
         this.texture = this.loadObject();
         this.carcube = null;
+
+manager.onLoad = function ( ) {
+        this.carcube.add(this.texture);
+	console.log( 'Loading complete!');
+
+};
+
         }
 
         connectedCallback() {
@@ -617,7 +626,6 @@ createGround() {
 );
 
         this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        this.carcube.add(this.texture);
         this.carcube.position.set(0, 0, 0);
         this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
         scene.add( this.carcube );
