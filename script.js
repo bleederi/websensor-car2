@@ -319,8 +319,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.position = "absolute";
         document.body.appendChild(this.hud);
 
-        //this.loadObject();
-        texture = this.objloader.parse("carmodel/lamborghini-aventador-pbribl.json");
+        this.loadObject();
         //scene.add(texture);
         //scene.add(this.texture);
         //console.log(this.texture);
@@ -603,6 +602,7 @@ createGround() {
                 this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
                 object.scale.set(0.5,0.5,0.5);
                 object.position.set(0, 5, -10);
+                texture = object;
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 //scene.add(object);
                 loaded = true;
