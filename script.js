@@ -292,9 +292,8 @@ customElements.define("game-view", class extends HTMLElement {
         this.objloader = new THREE.ObjectLoader();
 
         this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
-        carmesh = new THREE.Mesh(geometry);
-        scene.add(carmesh);
-        this.renderer.render(scene, this.camera);
+        //carmesh = new THREE.Mesh(geometry);
+        scene.add(geometry);
         loaded = true;
     });
 	
