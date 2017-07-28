@@ -79,6 +79,7 @@ var sea = null;
 var seaTex = null;
 var w = 10000, h = 5000;
 var loaded = false;
+var texture = null;
 
 //Timer
 var time=0;
@@ -286,8 +287,10 @@ customElements.define("game-view", class extends HTMLElement {
 	this.camera.position.y = 1;
 	this.camera.position.z = 2;
 
-        this.loader = new THREE.TextureLoader();
-        this.objloader = new THREE.ObjectLoader();
+        this.manager = new THREE.LoadingManager();
+
+        this.loader = new THREE.TextureLoader(this.manager);
+        this.objloader = new THREE.ObjectLoader(this.manager);
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -316,11 +319,18 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.position = "absolute";
         document.body.appendChild(this.hud);
 
-        this.texture = this.loadObject();
+        //this.loadObject();
+        texture = this.objloader.parse("carmodel/lamborghini-aventador-pbribl.json");
+        //scene.add(texture);
         //scene.add(this.texture);
-        console.log(this.texture);
+        //console.log(this.texture);
 
         this.carcube = null;
+
+        this.manager.onLoad = function ( ) {
+                console.log(texture);
+	        console.log( 'Loading complete!');
+                }
         }
 
         connectedCallback() {
@@ -590,15 +600,13 @@ createGround() {
         }
 
         loadObject() {
-                var obj = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
+                this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
                 object.scale.set(0.5,0.5,0.5);
                 object.position.set(0, 5, -10);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
-                scene.add(object);
+                //scene.add(object);
                 loaded = true;
-                return object;
     });
-                return obj;
         }
         createCar() {
                 //Physics for any model: add model as threejs object and then add physijs box to it
