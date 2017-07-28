@@ -394,7 +394,7 @@ this.manager.onLoad = function ( ) {
                 this.createGround();
                 this.buildRoad();
                 this.drawRoad();
-                this.createCar(carcube);
+                this.createCar();
                 this.createObstacles();
                 this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
@@ -611,7 +611,7 @@ createGround() {
     });
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
         }
-        createCar(carcube) {
+        createCar() {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
         var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
