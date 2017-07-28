@@ -603,7 +603,7 @@ createGround() {
                 object.scale.set(0.5,0.5,0.5);
                 object.position.set(0, 5, -10);
                    //need to push by value
-                Object.assign(texture, object);
+                Object.assign(texture, object.object);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 //scene.add(object);
                 loaded = true;
