@@ -290,11 +290,6 @@ customElements.define("game-view", class extends HTMLElement {
 
         this.loader = new THREE.TextureLoader();
         this.objloader = new THREE.ObjectLoader();
-var textureManager = new THREE.LoadingManager();
-textureManager.onLoad = function () {
-    // all textures are loaded
-    // ...
-};
 
         this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
         carmesh = new THREE.Mesh(geometry);
