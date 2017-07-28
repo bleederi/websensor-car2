@@ -315,11 +315,11 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.position = "absolute";
         document.body.appendChild(this.hud);
 
+        this.texture = this.loadObject();
+        scene.add(this.texture);
+        console.log(this.texture);
+
         this.carcube = null;
-                let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
-                let threeMaterial = new THREE.MeshBasicMaterial();
-                this.threeObject = new THREE.Mesh(threeGeom, threeMaterial);
-                scene.add(this.threeObject);
         }
 
         connectedCallback() {
