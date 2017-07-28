@@ -595,13 +595,28 @@ createGround() {
         object.scale.set(0.5,0.5,0.5);
         //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
         //scene.add(object);
-                var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
-                var physMaterial = Physijs.createMaterial(
-                    new THREE.MeshBasicMaterial({ color: "red" }),
-                    friction,
-                    restitution
-                );
-                physMaterial.visible = false;
+        var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
+        var physMaterial = Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({ color: "red" }),
+            friction,
+            restitution
+        );
+        physMaterial.visible = false;
+
+        var material = Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({ color: "red" }),
+            friction,
+            restitution
+);
+
+        this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+        this.carcube.add(carmesh);
+        this.carcube.position.set(0, 0, 0);
+        this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
+        scene.add( this.carcube );
+        this.carcube.setDamping(0.1, 0.1);
+        var forcev2 = {x: 0, y: 0, z: -1000*speed};
+        this.carcube.applyCentralImpulse(forcev2);
         loaded = true;
     });
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
@@ -611,20 +626,6 @@ createGround() {
                                 );*/
                 //var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 //let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
-                var material = Physijs.createMaterial(
-                    new THREE.MeshBasicMaterial({ color: "red" }),
-                    friction,
-                    restitution
-);
-
-                this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-                this.carcube.add(carmesh);
-                this.carcube.position.set(0, 0, 0);
-                this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
-	        scene.add( this.carcube );
-                this.carcube.setDamping(0.1, 0.1);
-                var forcev2 = {x: 0, y: 0, z: -1000*speed};
-                this.carcube.applyCentralImpulse(forcev2);
         }
 
         createObstacles() {     //Create obstacles that the player has to avoid crashing into
