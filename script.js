@@ -580,14 +580,19 @@ createGround() {
                 }
         }
         createCar() {
-                var geometry = new THREE.BoxGeometry( carWidth, 1, 1 );
+                //var geometry = new THREE.BoxGeometry( carWidth, 1, 1 );
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
     				},
                                 );*/
-                let geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
+                var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
+                var material = Physijs.createMaterial(
+                    new THREE.MeshBasicMaterial({ color: "red" }),
+                    friction,
+                    restitution
+);
                 //this.carcube = new THREE.Object3D();
                 //this.carcube.add( part1 );
                 this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
