@@ -278,11 +278,6 @@ customElements.define("game-view", class extends HTMLElement {
         
         scene = new Physijs.Scene();
 
-        let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
-        let threeMaterial = new THREE.MeshFaceMaterial(threeGeom.materials);
-        this.threeObject = new THREE.Mesh(threeGeom, threeMaterial);
-        scene.add(this.threeObject);
-
         scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
 
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 200);
@@ -293,6 +288,11 @@ customElements.define("game-view", class extends HTMLElement {
 
         this.loader = new THREE.TextureLoader();
         this.objloader = new THREE.ObjectLoader();
+
+        let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
+        let threeMaterial = new THREE.MeshFaceMaterial(threeGeom.materials);
+        this.threeObject = new THREE.Mesh(threeGeom, threeMaterial);
+        scene.add(this.threeObject);
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
