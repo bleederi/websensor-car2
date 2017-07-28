@@ -289,10 +289,11 @@ customElements.define("game-view", class extends HTMLElement {
 	this.camera.position.y = 1;
 	this.camera.position.z = 2;
 
-        this.loader = new THREE.TextureLoader();
-        this.objloader = new THREE.ObjectLoader();
-
         this.manager = new THREE.LoadingManager();
+
+        this.loader = new THREE.TextureLoader(this.manager);
+        this.objloader = new THREE.ObjectLoader(this.manager);
+
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -325,7 +326,6 @@ customElements.define("game-view", class extends HTMLElement {
         this.carcube = null;
 
 this.manager.onLoad = function ( ) {
-        this.carcube.add(this.texture);
 	console.log( 'Loading complete!');
 
 };
@@ -599,12 +599,13 @@ createGround() {
                 }
         }
         loadObject() {
-                let texture = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
+                let obj = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
                 object.scale.set(0.5,0.5,0.5);
+                object.position.set(0, 5, -10);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 //scene.add(object);
                 loaded = true;
-                return texture;
+                return obj;
     });
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
         }
