@@ -234,7 +234,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 //model.rotation.set(car.rotation);
                 model.rotateX(car.rotation.x-model.rotation.x);
                 model.rotateY(car.rotation.y-model.rotation.y);
-                model.rotatez(car.rotation.z-model.rotation.z);
+                model.rotateZ(car.rotation.z-model.rotation.z);
                 car.setLinearVelocity(velocity);
         }
 }
@@ -452,7 +452,7 @@ customElements.define("game-view", class extends HTMLElement {
                 //Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( Math.PI / 2, 0, 0));
 		//var mesh = new THREE.Mesh(object);
-                object.rotateY(Math.PI/2);
+                //object.rotateY(Math.PI/2);
                 //scene.add(object);
                 carbb = new THREE.Box3().setFromObject(object);
                 console.log(carbb);
