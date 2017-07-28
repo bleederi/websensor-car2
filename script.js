@@ -342,7 +342,7 @@ function createCar() {
 }
 
 
-render() {
+function render() {
 
         //Render HUD
         hud.innerHTML = -Math.floor(carcube.position.z);
