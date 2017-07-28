@@ -319,6 +319,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.position = "absolute";
         document.body.appendChild(this.hud);
 
+        this.texture = loadObject();
         this.carcube = null;
         }
 
@@ -412,8 +413,6 @@ customElements.define("game-view", class extends HTMLElement {
 
         render() {
 
-        if(loaded)
-        {
         //Render HUD
         this.hud.innerHTML = -Math.floor(this.carcube.position.z);
         //For some reason need to always update the position to avoid the HUD disappearing
@@ -423,8 +422,7 @@ customElements.define("game-view", class extends HTMLElement {
                 this.camera.lookAt(this.carcube.position);
                 // Render loop
                 this.renderer.render( sceneSky, this.cameraSky );  //skybox
-                this.renderer.render(scene, this.camera);    
-        }        
+                this.renderer.render(scene, this.camera);        
                 requestAnimationFrame(() => this.render());
         }
 
@@ -591,13 +589,19 @@ createGround() {
 		        scene.add( segment );
                 }
         }
+        loadObject() {
+                let texture = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
+                object.scale.set(0.5,0.5,0.5);
+                //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
+                //scene.add(object);
+                loaded = true;
+                return texture;
+    });
+                //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
+        }
         createCar(carcube) {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
-        this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
-        object.scale.set(0.5,0.5,0.5);
-        //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
-        //scene.add(object);
         var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
         var physMaterial = Physijs.createMaterial(
             new THREE.MeshBasicMaterial({ color: "red" }),
@@ -612,17 +616,14 @@ createGround() {
             restitution
 );
 
-        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        carcube.add(object);
-        carcube.position.set(0, 0, 0);
-        carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
+        this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+        this.carcube.add(this.texture);
+        this.carcube.position.set(0, 0, 0);
+        this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
         scene.add( carcube );
-        carcube.setDamping(0.1, 0.1);
+        this.carcube.setDamping(0.1, 0.1);
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
-        carcube.applyCentralImpulse(forcev2);
-        loaded = true;
-    });
-                //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
+        this.carcube.applyCentralImpulse(forcev2);
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
     				},
