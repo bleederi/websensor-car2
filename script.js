@@ -59,6 +59,11 @@ var offroad = false;
 //Rendering vars (Three.JS)
 var scene = null;
 var sceneSky = null;   //separate scene for the skybox
+var renderer = null;
+var camera = null;
+
+var loader = null;
+var objloader = null;
 
 var x = 0;      //car x coordinate
 var y = 0;      //car y coordinate
@@ -267,6 +272,35 @@ function keypress_handler(event) {
         force = 0.2;
 }
 
+function createGround() {
+/*	seaTex = THREE.ImageUtils.loadTexture("road.png");
+	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
+	seaTex.repeat.set(4, 2);
+	var seaMat = new THREE.MeshPhongMaterial({
+		specular: 0xffffff,
+		shininess: 100,
+		map: seaTex,
+		bumpMap: seaTex,
+		bumpScale: 5.0
+	});
+	var seaGeo = new THREE.PlaneGeometry(w, h);
+	sea = new THREE.Mesh(seaGeo, seaMat);
+        scene.add(sea);
+        this.renderer.autoClear = false;
+*/
+                var geometryG = new THREE.BoxGeometry( w, 2, h );
+                var materialGround = Physijs.createMaterial(
+                    new THREE.MeshBasicMaterial({ color: "green" }),
+                    friction,
+                    restitution
+                );
+                        let textureG = loader.load('road.png');     //should the callback be used here?
+                        let material = new THREE.MeshBasicMaterial( { map: textureG } );
+                        let ground = new Physijs.BoxMesh( geometryG, materialGround , 0);
+                        ground.position.set(0,-2.05,0);
+		        scene.add( ground );
+}
+
 
 //The custom element where the game will be rendered
 customElements.define("game-view", class extends HTMLElement {
@@ -274,22 +308,22 @@ customElements.define("game-view", class extends HTMLElement {
         super();
 
         //THREE.js render stuff
-        this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        gameview = document.body.appendChild(this.renderer.domElement);
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        gameview = document.body.appendChild(renderer.domElement);
         
         scene = new Physijs.Scene();
         scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
 
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 200);
-        this.camera.target = new THREE.Vector3(0, 0, 0);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 200);
+        camera.target = new THREE.Vector3(0, 0, 0);
 
-	this.camera.position.y = 1;
-	this.camera.position.z = 2;
+	camera.position.y = 1;
+	camera.position.z = 2;
 
         this.manager = new THREE.LoadingManager();
 
-        this.loader = new THREE.TextureLoader(this.manager);
+        loader = new THREE.TextureLoader(this.manager);
         this.objloader = new THREE.ObjectLoader(this.manager);
 	
         //skybox
@@ -303,7 +337,7 @@ customElements.define("game-view", class extends HTMLElement {
 	var materialArray = [];
 	for (var i = 0; i < 6; i++)
 		materialArray.push( new THREE.MeshBasicMaterial({
-			map: this.loader.load( imgFolder + directions[i] + imageSuffix ),
+			map: loader.load( imgFolder + directions[i] + imageSuffix ),
 			side: THREE.BackSide
 		}));
 	//var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
@@ -389,14 +423,14 @@ customElements.define("game-view", class extends HTMLElement {
                         window.addEventListener("keydown", keypress_handler, false);
                         window.addEventListener("keyup", keyup_handler, false);
                 }
-                this.createGround();
+                createGround();
                 this.buildRoad();
                 this.drawRoad();
                 this.createCar();
                 this.createObstacles();
                 this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube), step);
+                loopvar = setInterval(this.loop.bind(null, camera, this.carcube), step);
         }
         //Main loop
         loop(camera, carcube) {
@@ -427,10 +461,10 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.left = gameview.offsetLeft + 20 + "px";
         this.hud.style.top = gameview.offsetTop + 60 + "px";
 
-                this.camera.lookAt(this.carcube.position);
+                camera.lookAt(this.carcube.position);
                 // Render loop
-                this.renderer.render( sceneSky, this.cameraSky );  //skybox
-                this.renderer.render(scene, this.camera);
+                renderer.render( sceneSky, this.cameraSky );  //skybox
+                renderer.render(scene, camera);
                 requestAnimationFrame(() => this.render());
         }
 
@@ -484,34 +518,7 @@ customElements.define("game-view", class extends HTMLElement {
     }
 }
 */
-createGround() {
-/*	seaTex = THREE.ImageUtils.loadTexture("road.png");
-	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
-	seaTex.repeat.set(4, 2);
-	var seaMat = new THREE.MeshPhongMaterial({
-		specular: 0xffffff,
-		shininess: 100,
-		map: seaTex,
-		bumpMap: seaTex,
-		bumpScale: 5.0
-	});
-	var seaGeo = new THREE.PlaneGeometry(w, h);
-	sea = new THREE.Mesh(seaGeo, seaMat);
-        scene.add(sea);
-        this.renderer.autoClear = false;
-*/
-                var geometryG = new THREE.BoxGeometry( w, 2, h );
-                var materialGround = Physijs.createMaterial(
-                    new THREE.MeshBasicMaterial({ color: "green" }),
-                    friction,
-                    restitution
-                );
-                        let textureG = this.loader.load('road.png');     //should the callback be used here?
-                        let material = new THREE.MeshBasicMaterial( { map: textureG } );
-                        let ground = new Physijs.BoxMesh( geometryG, materialGround , 0);
-                        ground.position.set(0,-2.05,0);
-		        scene.add( ground );
-}
+
         buildRoad() {
                 let roadx = 0;  //keep track of x coordinate for curves
                 for(let i=0; i<roadLength; i++)
@@ -587,7 +594,7 @@ createGround() {
                 var road = new Physijs.BoxMesh(geometry, materialRoad, 0);
                 for (let j=0; j<segments.length; j++)
                 {
-                        let texture = this.loader.load('road.png');     //should the callback be used here?
+                        let texture = loader.load('road.png');     //should the callback be used here?
                         let material = new THREE.MeshBasicMaterial( { map: texture } );
                         let segment = new Physijs.BoxMesh( geometry, material , 0);
                         segment.position.set(segments[j].x,segments[j].y,segments[j].z);
