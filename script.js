@@ -588,7 +588,7 @@ createGround() {
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
                 let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 let threeMaterial = new THREE.MeshBasicMaterial();
-                let threeObject = new THREE.Mesh(threeGeom, threeMaterial);
+                var threeObject = new THREE.Mesh(threeGeom, threeMaterial);
                 var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
                 var physMaterial = Physijs.createMaterial(
                     new THREE.MeshBasicMaterial({ color: "red" }),
