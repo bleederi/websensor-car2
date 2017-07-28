@@ -430,7 +430,7 @@ customElements.define("game-view", class extends HTMLElement {
         document.body.appendChild(hud);
 
         this.loadObject();
-                this.objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object, materials) {
+                this.objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object) {
                 //object.scale.set(0.5,0.5,0.5);
                 //object.position.set(0, 2, -50);
                    //need to push by value
@@ -438,7 +438,7 @@ customElements.define("game-view", class extends HTMLElement {
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
 		var mesh = new Physijs.BoxMesh(
 			object,
-			new THREE.MeshFaceMaterial( materials )
+			new THREE.MeshFaceMaterial()
 		);
                 scene.add(mesh);
                 console.log(object);
