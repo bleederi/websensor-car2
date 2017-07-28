@@ -78,6 +78,7 @@ var carWidth = 1;
 var sea = null;
 var seaTex = null;
 var w = 10000, h = 5000;
+var loaded = false;
 
 //Timer
 var time=0;
@@ -292,6 +293,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
         var carmesh = new THREE.Mesh(geometry);
         scene.add(carmesh);
+        loaded = true;
     });
 	
         //skybox
@@ -392,23 +394,26 @@ customElements.define("game-view", class extends HTMLElement {
         }
         //Main loop
         loop(camera, carcube, threeObject) {
-                update();
-		// Infinite ocean
-		//sea.position.x = camera.position.x;
-		//sea.position.y = camera.position.y;
-                //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
-                threeObject.position.x = camera.position.x;
-                threeObject.position.y = camera.position.y+5;
-                threeObject.position.z = camera.position.z-5;                
-                scene.simulate();
-                move(camera, carcube);
-                offroad = isOffRoad(carcube);
-                if(offroad)
+                if(loaded)
                 {
-                        console.log("Offroad");
-                        gameOver();         
-                }   
-                speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit             
+                        update();
+		        // Infinite ocean
+		        //sea.position.x = camera.position.x;
+		        //sea.position.y = camera.position.y;
+                        //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
+                        threeObject.position.x = camera.position.x;
+                        threeObject.position.y = camera.position.y+5;
+                        threeObject.position.z = camera.position.z-5;                
+                        scene.simulate();
+                        move(camera, carcube);
+                        offroad = isOffRoad(carcube);
+                        if(offroad)
+                        {
+                                console.log("Offroad");
+                                gameOver();         
+                        }   
+                        speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit    
+                }         
         }
 
         render() {
