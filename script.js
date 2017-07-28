@@ -79,7 +79,7 @@ var sea = null;
 var seaTex = null;
 var w = 10000, h = 5000;
 var loaded = false;
-var texture = new Object;
+var texture = null;
 
 //Timer
 var time=0;
@@ -329,6 +329,34 @@ customElements.define("game-view", class extends HTMLElement {
         this.manager.onLoad = function ( ) {
                 console.log(texture);
 	        console.log( 'Loading complete!');
+                this.createGround();
+                this.buildRoad();
+                this.drawRoad();
+                this.createCar();
+                this.createObstacles();
+                this.render();
+                timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
+                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube), step);
+        }
+        //Main loop
+        loop(camera, carcube) {
+                update();
+		// Infinite ocean
+		//sea.position.x = camera.position.x;
+		//sea.position.y = camera.position.y;
+                //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
+                //threeObject.position.x = camera.position.x;
+                //threeObject.position.y = camera.position.y;
+                //threeObject.position.z = camera.position.z-50;                
+                scene.simulate();
+                move(camera, carcube);
+                offroad = isOffRoad(carcube);
+                if(offroad)
+                {
+                        console.log("Offroad");
+                        gameOver();         
+                }   
+                speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit 
                 }
         }
 
@@ -388,35 +416,7 @@ customElements.define("game-view", class extends HTMLElement {
                 {
                         window.addEventListener("keydown", keypress_handler, false);
                         window.addEventListener("keyup", keyup_handler, false);
-                }
-                this.createGround();
-                this.buildRoad();
-                this.drawRoad();
-                this.createCar();
-                this.createObstacles();
-                this.render();
-                timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube), step);
-        }
-        //Main loop
-        loop(camera, carcube) {
-                update();
-		// Infinite ocean
-		//sea.position.x = camera.position.x;
-		//sea.position.y = camera.position.y;
-                //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
-                //threeObject.position.x = camera.position.x;
-                //threeObject.position.y = camera.position.y;
-                //threeObject.position.z = camera.position.z-50;                
-                scene.simulate();
-                move(camera, carcube);
-                offroad = isOffRoad(carcube);
-                if(offroad)
-                {
-                        console.log("Offroad");
-                        gameOver();         
-                }   
-                speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit             
+                }            
         }
 
         render() {
@@ -599,9 +599,9 @@ createGround() {
         }
 
         loadObject() {
-                texture = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
-                object.scale.set(0.5,0.5,0.5);
-                object.position.set(0, 5, -10);
+                this.objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object) {
+                //object.scale.set(0.5,0.5,0.5);
+                object.position.set(0, 2, -50);
                    //need to push by value
                 //Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
