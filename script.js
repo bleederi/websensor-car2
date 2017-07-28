@@ -319,11 +319,11 @@ function createCar() {
         carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
         //carcube.add(texture);
         //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
-        /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
+        /*let carObj = objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
 		        scene.add( obj );
 		        },
                         );*/
-        //var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
+        //var geometry = objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
         //let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
         var material = Physijs.createMaterial(
             new THREE.MeshBasicMaterial({ color: "red" }),
@@ -400,7 +400,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.manager = new THREE.LoadingManager();
 
         loader = new THREE.TextureLoader(this.manager);
-        this.objloader = new THREE.ObjectLoader(this.manager);
+        objloader = new THREE.ObjectLoader(this.manager);
 	
         //skybox
         cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -430,18 +430,20 @@ customElements.define("game-view", class extends HTMLElement {
         document.body.appendChild(hud);
 
         this.loadObject();
-                this.objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object) {
+                objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object) {
+                var k = objloader.parse(object);
+                console.log(k);
                 //object.scale.set(0.5,0.5,0.5);
                 //object.position.set(0, 2, -50);
                    //need to push by value
                 //Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
-		var mesh = new THREE.Mesh(object);
+		//var mesh = new THREE.Mesh(object);
                 //mesh.position.set(0,0,0);
-                scene.add(mesh);
+                scene.add(object);
                 console.log(object);
                 loaded = true;
-                console.log(texture);
+                //console.log(texture);
 	        console.log( 'Loading complete!');
                 createCar();
                 render();
