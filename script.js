@@ -320,7 +320,7 @@ function createCar() {
                     friction,
                     restitution
                 );
-                //material.visible = false;
+                material.visible = false;
 
         carcube = new Physijs.BoxMesh( geometry, material, mass );
         //carcube.add(texture);
