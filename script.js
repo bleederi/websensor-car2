@@ -592,7 +592,7 @@ createGround() {
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
         carmesh = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
         object.scale.set(0.5,0.5,0.5);
-        
+        object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
         scene.add(object);
         loaded = true;
     });
@@ -605,7 +605,7 @@ createGround() {
                 physMaterial.visible = false;
 
                 this.carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-                this.carcube.add(carmesh);
+                //this.carcube.add(carmesh);
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
