@@ -440,7 +440,7 @@ customElements.define("game-view", class extends HTMLElement {
                 objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object) {
                 //var k = objloader.parse(object);
                 //console.log(k);
-                object.scale.set(0.5,0.5,0.5);
+                //object.scale.set(0.5,0.5,0.5);
                 object.position.set(0, -1, -2);      //should set according to road
                    //need to push by value
                 //Object.assign(texture, object);
