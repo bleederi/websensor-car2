@@ -90,6 +90,7 @@ var texture = null;
 var hud = null;
 var carcube = null;
 var carModel = null;
+var carbb = null;
 
 //Timer
 var time=0;
@@ -444,7 +445,7 @@ customElements.define("game-view", class extends HTMLElement {
 		//var mesh = new THREE.Mesh(object);
                 object.rotateY(Math.PI/2);
                 scene.add(object);
-                let carbb = new THREE.Box3().setFromObject(object);
+                carbb = new THREE.Box3().setFromObject(object);
                 console.log(carbb);
                 carModel = object;
                 loaded = true;
