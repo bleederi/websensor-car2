@@ -590,12 +590,13 @@ createGround() {
         }
 
         loadObject() {
-                let obj = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
+                var obj = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(object) {
                 object.scale.set(0.5,0.5,0.5);
                 object.position.set(0, 5, -10);
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 scene.add(object);
                 loaded = true;
+                return object;
     });
                 return obj;
         }
