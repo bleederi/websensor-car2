@@ -324,6 +324,11 @@ customElements.define("game-view", class extends HTMLElement {
 
         this.texture = this.loadObject();
 
+this.manager.onLoad = function ( ) {
+        //carcube.add(this.texture);
+	console.log( 'Loading complete!');
+};
+
         }
 
         connectedCallback() {
@@ -388,13 +393,9 @@ customElements.define("game-view", class extends HTMLElement {
                 this.drawRoad();
                 this.createCar();
                 this.createObstacles();
-this.manager.onLoad = function ( ) {
-        carcube.add(this.texture);
-        this.render();
-        timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-        loopvar = setInterval(this.loop.bind(null, this.camera, carcube, this.threeObject), step);
-	console.log( 'Loading complete!');
-};
+                this.render();
+                timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
+                loopvar = setInterval(this.loop.bind(null, this.camera, carcube, this.threeObject), step);
         }
         //Main loop
         loop(camera, carcube, threeObject) {
