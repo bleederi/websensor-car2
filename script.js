@@ -587,7 +587,7 @@ createGround() {
     				},
                                 );*/
                 var geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
-                let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
+                //let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
                 var material = Physijs.createMaterial(
                     new THREE.MeshBasicMaterial({ color: "red" }),
                     friction,
