@@ -586,12 +586,11 @@ createGround() {
     				scene.add( obj );
     				},
                                 );*/
-                this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
+                let geometry = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
-                mesh = new THREE.Object3D();
-                mesh.add( part1 );
+                //this.carcube = new THREE.Object3D();
+                //this.carcube.add( part1 );
                 this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
-                });
                 this.carcube.position.set(0, 0, 0);
                 this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
 	        scene.add( this.carcube );
