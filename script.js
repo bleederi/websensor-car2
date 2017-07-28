@@ -332,7 +332,7 @@ customElements.define("game-view", class extends HTMLElement {
                 orientation_sensor.onactivate = () => {
                 };
                 orientation_sensor.start();
-                const accl = new Accelerometer({frequency: sensorfreq});
+                /*const accl = new Accelerometer({frequency: sensorfreq});
                 const gyro = new Gyroscope({frequency: sensorfreq});
                 let timestamp = null;
                 let alpha = beta = gamma = 0;
@@ -362,6 +362,7 @@ customElements.define("game-view", class extends HTMLElement {
 
                  accl.start();
                  gyro.start();
+                */
                 }
                 catch(err) {
                         console.log(err.message);
@@ -415,7 +416,7 @@ customElements.define("game-view", class extends HTMLElement {
                 this.renderer.render(scene, this.camera);
                 requestAnimationFrame(() => this.render());
         }
-
+/*
 //Below from http://www.graemefulton.com/three-js-infinite-world-webgl-p1/
 
 /** 
@@ -465,7 +466,7 @@ createTerrainMatrix(scene, perlinNoise){
  
     }
 }
-
+*/
 createGround() {
 /*	seaTex = THREE.ImageUtils.loadTexture("road.png");
 	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
