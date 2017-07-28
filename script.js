@@ -329,14 +329,6 @@ customElements.define("game-view", class extends HTMLElement {
         this.manager.onLoad = function ( ) {
                 console.log(texture);
 	        console.log( 'Loading complete!');
-                createGround();
-                this.buildRoad();
-                this.drawRoad();
-                this.createCar();
-                this.createObstacles();
-                this.render();
-                timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube), step);
                 }
         }
 
@@ -397,6 +389,14 @@ customElements.define("game-view", class extends HTMLElement {
                         window.addEventListener("keydown", keypress_handler, false);
                         window.addEventListener("keyup", keyup_handler, false);
                 }
+                this.createGround();
+                this.buildRoad();
+                this.drawRoad();
+                this.createCar();
+                this.createObstacles();
+                this.render();
+                timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
+                loopvar = setInterval(this.loop.bind(null, this.camera, this.carcube), step);
         }
         //Main loop
         loop(camera, carcube) {
@@ -484,7 +484,7 @@ customElements.define("game-view", class extends HTMLElement {
     }
 }
 */
-function createGround() {
+createGround() {
 /*	seaTex = THREE.ImageUtils.loadTexture("road.png");
 	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
 	seaTex.repeat.set(4, 2);
