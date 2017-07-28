@@ -317,7 +317,7 @@ function createCar() {
         physMaterial.visible = false;
 
         carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        carcube.add(texture);
+        //carcube.add(texture);
         //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
         /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
 		        scene.add( obj );
@@ -430,18 +430,32 @@ customElements.define("game-view", class extends HTMLElement {
         document.body.appendChild(hud);
 
         this.loadObject();
-        //scene.add(texture);
-        //scene.add(this.texture);
-        console.log(texture);
-
-
-        this.manager.onLoad = function ( ) {
+                this.objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object, materials) {
+                //object.scale.set(0.5,0.5,0.5);
+                //object.position.set(0, 2, -50);
+                   //need to push by value
+                //Object.assign(texture, object);
+                //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
+		var mesh = new Physijs.BoxMesh(
+			object,
+			new THREE.MeshFaceMaterial( materials )
+		);
+                scene.add(mesh);
+                console.log(object);
+                loaded = true;
                 console.log(texture);
 	        console.log( 'Loading complete!');
                 createCar();
                 render();
 
                 loopvar = setInterval(loop.bind(null, camera, carcube), step);
+    });
+        //scene.add(texture);
+        //scene.add(this.texture);
+        console.log(texture);
+
+
+        this.manager.onLoad = function ( ) {
                 }
         }
 
@@ -649,17 +663,6 @@ customElements.define("game-view", class extends HTMLElement {
         }
 
         loadObject() {
-                this.objloader.load( 'carmodel/lamborghini-aventador-pbribl.json', function(object) {
-                //object.scale.set(0.5,0.5,0.5);
-                object.position.set(0, 2, -50);
-                   //need to push by value
-                //Object.assign(texture, object);
-                //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
-                scene.add(object);
-                console.log(object);
-                loaded = true;
-                return object;
-    });
         }
 
         createObstacles() {     //Create obstacles that the player has to avoid crashing into
