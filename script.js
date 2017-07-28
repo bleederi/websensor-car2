@@ -322,33 +322,14 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.position = "absolute";
         document.body.appendChild(this.hud);
 
-        var texture = this.loadObject();
+        this.texture = this.loadObject();
 
 this.manager.onLoad = function ( ) {
-        var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
-        var physMaterial = Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({ color: "red" }),
-            friction,
-            restitution
-        );
-        physMaterial.visible = false;
-
-        var material = Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({ color: "red" }),
-            friction,
-            restitution
-);
-
-        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
-        carcube.add(texture);
-        scene.add(carcube);
-        carcube.position.set(0, 0, 0);
-        carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
-        carcube.setDamping(0.1, 0.1);
-        var forcev2 = {x: 0, y: 0, z: -1000*speed};
-        carcube.applyCentralImpulse(forcev2);
+        if(carcube)
+        {
+        carcube.add(this.texture);
 	console.log( 'Loading complete!');
-        render();
+        }
 };
 
         }
@@ -413,9 +394,9 @@ this.manager.onLoad = function ( ) {
                 this.createGround();
                 this.buildRoad();
                 this.drawRoad();
-                this.createCar();
+                this.createCar(carcube);
                 this.createObstacles();
-                //render();
+                this.render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
                 loopvar = setInterval(this.loop.bind(null, this.camera, carcube, this.threeObject), step);
         }
@@ -441,7 +422,7 @@ this.manager.onLoad = function ( ) {
                 }         
         }
 
-        function render() {
+        render() {
 
         //Render HUD
         this.hud.innerHTML = -Math.floor(carcube.position.z);
@@ -630,9 +611,30 @@ createGround() {
     });
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
         }
-        createCar() {
+        createCar(carcube) {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
+        var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
+        var physMaterial = Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({ color: "red" }),
+            friction,
+            restitution
+        );
+        physMaterial.visible = false;
+
+        var material = Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({ color: "red" }),
+            friction,
+            restitution
+);
+
+        carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
+        carcube.position.set(0, 0, 0);
+        carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
+        scene.add( carcube );
+        carcube.setDamping(0.1, 0.1);
+        var forcev2 = {x: 0, y: 0, z: -1000*speed};
+        carcube.applyCentralImpulse(forcev2);
                 /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
     				scene.add( obj );
     				},
@@ -656,3 +658,4 @@ createGround() {
                 }
         }
 });
+
