@@ -412,6 +412,8 @@ customElements.define("game-view", class extends HTMLElement {
 
         render() {
 
+        if(loaded)
+        {
         //Render HUD
         this.hud.innerHTML = -Math.floor(this.carcube.position.z);
         //For some reason need to always update the position to avoid the HUD disappearing
@@ -421,7 +423,8 @@ customElements.define("game-view", class extends HTMLElement {
                 this.camera.lookAt(this.carcube.position);
                 // Render loop
                 this.renderer.render( sceneSky, this.cameraSky );  //skybox
-                this.renderer.render(scene, this.camera);            
+                this.renderer.render(scene, this.camera);    
+        }        
                 requestAnimationFrame(() => this.render());
         }
 
@@ -612,7 +615,7 @@ createGround() {
         carcube = new Physijs.BoxMesh( physGeom, physMaterial, mass );
         carcube.add(object);
         carcube.position.set(0, 0, 0);
-        carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
+        carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
         scene.add( carcube );
         carcube.setDamping(0.1, 0.1);
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
