@@ -319,7 +319,7 @@ customElements.define("game-view", class extends HTMLElement {
         this.hud.style.position = "absolute";
         document.body.appendChild(this.hud);
 
-        this.texture = loadObject();
+        this.texture = this.loadObject();
         this.carcube = null;
         }
 
