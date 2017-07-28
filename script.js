@@ -289,10 +289,10 @@ customElements.define("game-view", class extends HTMLElement {
         this.loader = new THREE.TextureLoader();
         this.objloader = new THREE.ObjectLoader();
 
-        let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
-        let threeMaterial = new THREE.MeshFaceMaterial(threeGeom.materials);
-        this.threeObject = new THREE.Mesh(threeGeom, threeMaterial);
-        scene.add(this.threeObject);
+        this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
+        var carmesh = new THREE.Mesh(geometry);
+        scene.add(carmesh);
+    });
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
