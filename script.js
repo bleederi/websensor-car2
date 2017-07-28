@@ -286,7 +286,7 @@ customElements.define("game-view", class extends HTMLElement {
 	this.camera.position.z = 2;
 
         this.loader = new THREE.TextureLoader();
-        this.objloader = new THREE.JSONLoader();
+        this.objloader = new THREE.ObjectLoader();
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -613,7 +613,7 @@ createGround() {
                 //this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
                 this.carcube.position.set(0, 0, 0);
                 this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
-	        scene.add( this.carcube );
+	        scene.add( threeObject );
                 this.carcube.setDamping(0.1, 0.1);
                 var forcev2 = {x: 0, y: 0, z: -1000*speed};
                 this.carcube.applyCentralImpulse(forcev2);
