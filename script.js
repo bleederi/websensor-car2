@@ -417,6 +417,8 @@ customElements.define("game-view", class extends HTMLElement {
         this.manager.onLoad = function ( ) {
                 console.log(texture);
 	        console.log( 'Loading complete!');
+                createCar();
+                render();
                 }
         }
 
@@ -480,9 +482,8 @@ customElements.define("game-view", class extends HTMLElement {
                 createGround();
                 this.buildRoad();
                 this.drawRoad();
-                createCar();
                 this.createObstacles();
-                render();
+
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
                 loopvar = setInterval(this.loop.bind(null, camera, carcube), step);
         }
