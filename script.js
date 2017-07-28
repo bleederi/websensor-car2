@@ -335,13 +335,13 @@ function createCar() {
             friction,
             restitution
         );
-        material.visible = false;
         //carcube = new THREE.Object3D();
         //carcube.add( part1 );
         //carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
         carcube.position.set(0, 0, 0);
         carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
         scene.add( carcube );
+        carcube.visible = false;
         carcube.setDamping(0.1, 0.1);
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
         carcube.applyCentralImpulse(forcev2);
