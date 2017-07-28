@@ -80,7 +80,6 @@ var seaTex = null;
 var w = 10000, h = 5000;
 var loaded = false;
 var carmesh = null;
-var carcube = null;
 
 //Timer
 var time=0;
@@ -323,6 +322,7 @@ customElements.define("game-view", class extends HTMLElement {
         document.body.appendChild(this.hud);
 
         this.texture = this.loadObject();
+        var carcube = null;
 
 this.manager.onLoad = function ( ) {
         carcube.add(this.texture);
