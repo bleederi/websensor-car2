@@ -206,7 +206,7 @@ function getForce(roll, pitch, yaw, mode="landscape")    //Returns the force the
 }
 
 
-function move(camera, car, model) //Moves the car(camera)
+function move(camera, car, model) //Moves the car(camera) and syncs the model to the car
 {
         if(car !== undefined) {
                 var velocity = new THREE.Vector3();
@@ -230,6 +230,7 @@ function move(camera, car, model) //Moves the car(camera)
                 camera.position.z = car.position.z + 5;
                 model.position.setX(car.position.x);
                 model.position.setZ(car.position.z);
+                model.position.setY(car.position.y);
                 car.setLinearVelocity(velocity);
         }
 }
