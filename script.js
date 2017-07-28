@@ -348,6 +348,7 @@ this.manager.onLoad = function ( ) {
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
         carcube.applyCentralImpulse(forcev2);
 	console.log( 'Loading complete!');
+        render();
 };
 
         }
@@ -414,7 +415,7 @@ this.manager.onLoad = function ( ) {
                 this.drawRoad();
                 this.createCar();
                 this.createObstacles();
-                this.render();
+                //render();
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
                 loopvar = setInterval(this.loop.bind(null, this.camera, carcube, this.threeObject), step);
         }
@@ -440,10 +441,10 @@ this.manager.onLoad = function ( ) {
                 }         
         }
 
-        render() {
+        function render() {
 
         //Render HUD
-        //this.hud.innerHTML = -Math.floor(carcube.position.z);
+        this.hud.innerHTML = -Math.floor(carcube.position.z);
         //For some reason need to always update the position to avoid the HUD disappearing
         this.hud.style.left = gameview.offsetLeft + 20 + "px";
         this.hud.style.top = gameview.offsetTop + 60 + "px";
