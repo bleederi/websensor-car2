@@ -391,6 +391,9 @@ customElements.define("game-view", class extends HTMLElement {
 		//sea.position.x = camera.position.x;
 		//sea.position.y = camera.position.y;
                 //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
+                threeObject.position.x = camera.position.x;
+                threeObject.position.y = camera.position.y;
+                threeObject.position.z = camera.position.z-50;                
                 scene.simulate();
                 move(camera, carcube);
                 offroad = isOffRoad(carcube);
@@ -586,9 +589,6 @@ createGround() {
                 let threeGeom = this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
                 let threeMaterial = new THREE.MeshBasicMaterial();
                 let threeObject = new THREE.Mesh(threeGeom, threeMaterial);
-                threeObject.position.x = 5;
-                threeObject.position.y = 5;
-                threeObject.position.z = -50;
                 var physGeom = new THREE.CylinderGeometry(0.5, 0.5, 2.0);
                 var physMaterial = Physijs.createMaterial(
                     new THREE.MeshBasicMaterial({ color: "red" }),
