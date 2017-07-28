@@ -340,7 +340,7 @@ function createCar() {
         carcube.material.transparent = true;
         carcube.material.opacity = 0;
         carcube.material.visible = false;
-        carcube.needsUpdate = true;
+        carcube.material.needsUpdate = true;
         //carcube.visible = false;
         //carcube.material.visible = false;
         carcube.setDamping(0.1, 0.1);
