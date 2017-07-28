@@ -286,6 +286,7 @@ customElements.define("game-view", class extends HTMLElement {
 	this.camera.position.z = 2;
 
         this.loader = new THREE.TextureLoader();
+        this.objloader = new THREE.ObjectLoader();
 	
         //skybox
         this.cameraSky = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -581,13 +582,16 @@ createGround() {
         createCar() {
                 var geometry = new THREE.BoxGeometry( carWidth, 1, 1 );
                 //car model: carmodel/lamborghini-aventador-pbribl.json, from https://clara.io/view/d3b82831-d56b-462f-b30c-500ea1c7f870
-                let textureCar = this.loader.load('carmodel/lamborghini-aventador-pbribl.json');
-                var material = Physijs.createMaterial(
-                    textureCar,
-                    friction,
-                    restitution
-                );
-                this.carcube = new Physijs.BoxMesh( geometry, material, mass );
+                /*let carObj = this.objloader.load('carmodel/lamborghini-aventador-pbribl.json', function ( obj ) {
+    				scene.add( obj );
+    				},
+                                );*/
+                this.objloader.load( "carmodel/lamborghini-aventador-pbribl.json", function(geometry) {
+                let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
+                mesh = new THREE.Object3D();
+                mesh.add( part1 );
+                this.carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
+                });
                 this.carcube.position.set(0, 0, 0);
                 this.carcube.bb = new THREE.Box3().setFromObject(this.carcube); //create bounding box for collision detection                 
 	        scene.add( this.carcube );
