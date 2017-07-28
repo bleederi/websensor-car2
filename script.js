@@ -330,11 +330,6 @@ function createCar() {
                         );*/
         //var geometry = objloader.load( "carmodel/lamborghini-aventador-pbribl.json");
         //let part1 = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial() );
-        var material = Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({ color: "red" }),
-            friction,
-            restitution
-        );
         //carcube = new THREE.Object3D();
         //carcube.add( part1 );
         //carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
