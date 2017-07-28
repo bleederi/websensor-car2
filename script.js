@@ -371,7 +371,7 @@ function loop(camera, carcube) {
         //threeObject.position.y = camera.position.y;
         //threeObject.position.z = camera.position.z-50;                
         scene.simulate();
-        move(camera, carcube);
+        move(camera, carcube, carModel);
         offroad = isOffRoad(carcube);
         if(offroad)
         {
