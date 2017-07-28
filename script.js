@@ -357,6 +357,27 @@ function render() {
                 requestAnimationFrame(() => render());
 }
 
+//Main loop
+function loop(camera, carcube) {
+        update();
+	// Infinite ocean
+	//sea.position.x = camera.position.x;
+	//sea.position.y = camera.position.y;
+        //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
+        //threeObject.position.x = camera.position.x;
+        //threeObject.position.y = camera.position.y;
+        //threeObject.position.z = camera.position.z-50;                
+        scene.simulate();
+        move(camera, carcube);
+        offroad = isOffRoad(carcube);
+        if(offroad)
+        {
+                console.log("Offroad");
+                gameOver();         
+        }   
+        speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit             
+}
+
 //The custom element where the game will be rendered
 customElements.define("game-view", class extends HTMLElement {
         constructor() {
@@ -419,6 +440,8 @@ customElements.define("game-view", class extends HTMLElement {
 	        console.log( 'Loading complete!');
                 createCar();
                 render();
+
+                loopvar = setInterval(loop.bind(null, camera, carcube), step);
                 }
         }
 
@@ -485,27 +508,6 @@ customElements.define("game-view", class extends HTMLElement {
                 this.createObstacles();
 
                 timerVar=setInterval(function(){time = time + 10;},10);  //timer in ms, lowest possible value is 10, accurate enough though
-                loopvar = setInterval(this.loop.bind(null, camera, carcube), step);
-        }
-        //Main loop
-        loop(camera, carcube) {
-                update();
-		// Infinite ocean
-		//sea.position.x = camera.position.x;
-		//sea.position.y = camera.position.y;
-                //seaTex.offset.set(camera.position.x / w * seaTex.repeat.x, camera.position.y / h * seaTex.repeat.y);
-                //threeObject.position.x = camera.position.x;
-                //threeObject.position.y = camera.position.y;
-                //threeObject.position.z = camera.position.z-50;                
-                scene.simulate();
-                move(camera, carcube);
-                offroad = isOffRoad(carcube);
-                if(offroad)
-                {
-                        console.log("Offroad");
-                        gameOver();         
-                }   
-                speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit             
         }
 
 
