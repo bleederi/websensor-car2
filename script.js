@@ -595,8 +595,9 @@ createGround() {
                 //object.rotation.set(new THREE.Vector3( 0, 0, Math.PI / 2));
                 scene.add(object);
                 loaded = true;
-                return obj;
     });
+                return obj;
+        }
         createCar() {
                 //Physics for any model: add model as threejs object and then add physijs box to it
                 //let threeGeom = new THREE.BoxGeometry( carWidth, 1, 1 );
