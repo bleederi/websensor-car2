@@ -220,7 +220,6 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                         //velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         //forcev = {x: forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
                         forcev = {x: (forcefactor/2)*mass*force*angles.beta, y: 0, z: -(forcefactor/6)*mass};
-                }
                 if(nosensors)    //no sensors
                 {
                         //velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
