@@ -104,7 +104,7 @@ var gameview = null;
 var friction = 0.3;
 var restitution = 0;
 var forcefactor = 15;
-var mass = 10;
+var mass = 20;
 
 Physijs.scripts.worker = '/websensor-car/js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
@@ -213,17 +213,17 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 var forcev = new THREE.Vector3();
                 if(direction == "left")
                 {
-                        velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: -speed*100*Math.cos(car.rotation.z)});
+                        velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*100*Math.cos(car.rotation.z)});
                         forcev = {x: -forcefactor*mass*force, y: 0, z: -40*speed};
                 }
                 else if (direction == "right")
                 {
-                        velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: -speed*100*Math.cos(car.rotation.z)});
+                        velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*100*Math.cos(car.rotation.z)});
                         forcev = {x: forcefactor*mass*force, y: 0, z: -40*speed};
                 }
                 else    //no sensors
                 {
-                        velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: -speed*100*Math.cos(car.rotation.z)});
+                        velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*100*Math.cos(car.rotation.z)});
                         forcev = {x: 0, y: 0, z: -40*speed};
                 }
                 camera.position.x = car.position.x;
