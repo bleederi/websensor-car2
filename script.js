@@ -474,7 +474,7 @@ customElements.define("game-view", class extends HTMLElement {
                 //var k = objloader.parse(object);
                 //console.log(k);
                 object.scale.set(0.5,0.5,0.5);
-                object.position.set(0, -1, -2);      //should set according to road
+                //object.position.set(0, -1, -2);      //should set according to road
                    //need to push by value
                 //Object.assign(texture, object);
                 //object.rotation.set(new THREE.Vector3( Math.PI / 2, 0, 0));
