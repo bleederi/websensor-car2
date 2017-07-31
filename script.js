@@ -214,17 +214,17 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 if(direction == "left")
                 {
                         //velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        forcev = {x: -forcefactor*mass*force, y: 0, z: -0.5*mass};
+                        forcev = {x: -forcefactor*mass*force, y: 0, z: -0.05*mass};
                 }
                 else if (direction == "right")
                 {
                         //velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        forcev = {x: forcefactor*mass*force, y: 0, z: -0.5*mass};
+                        forcev = {x: forcefactor*mass*force, y: 0, z: -0.05*mass};
                 }
                 else    //no sensors
                 {
                         //velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        forcev = {x: 0, y: 0, z: -40*speed};
+                        forcev = {x: 0, y: 0, z: -0.05*mass};
                 }
                 camera.position.x = car.position.x;
                 camera.position.z = car.position.z + 5;
