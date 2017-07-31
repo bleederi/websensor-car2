@@ -245,13 +245,13 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 //Sync camera and car model with the car collision box
                 //camera.position.x = car.position.x;
                 //camera.position.z = car.position.z + 5;
-                model.position.setX(car.position.x);
-                model.position.setZ(car.position.z);
-                model.position.setY(car.position.y);
+                //model.position.setX(car.position.x);
+                //model.position.setZ(car.position.z);
+                //model.position.setY(car.position.y);
                 //model.rotation.set(car.rotation);
-                model.rotation.x = car.rotation.x;
-                model.rotation.y = car.rotation.y + Math.PI/2;
-                model.rotation.z = car.rotation.z;
+                //model.rotation.x = car.rotation.x;
+                //model.rotation.y = car.rotation.y + Math.PI/2;
+                //model.rotation.z = car.rotation.z;
                 //model.rotation.set(car.rotation.x, car.rotation.y, car.rotation.z );
                 //model.rotateY(car.rotation.y-model.rotation.y);
                 //model.rotateZ(car.rotation.z-model.rotation.z);
