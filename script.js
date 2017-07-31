@@ -215,13 +215,13 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 {
                         //velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         //forcev = {x: -forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
-                        forcev = {x: -(forcefactor/2)*mass*force, y: 0, z: -(forcefactor/4)*mass};
+                        forcev = {x: -(forcefactor/2)*mass*force, y: 0, z: -(forcefactor/6)*mass};
                 }
                 else if (direction == "right")
                 {
                         //velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         //forcev = {x: forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
-                        forcev = {x: (forcefactor/2)*mass*force, y: 0, z: -(forcefactor/4)*mass};
+                        forcev = {x: (forcefactor/2)*mass*force, y: 0, z: -(forcefactor/6)*mass};
                 }
                 else    //no sensors
                 {
@@ -361,7 +361,7 @@ function createCar() {
         */
         carcube.setDamping(0.5, 0.5);
         var forcev2 = {x: 0, y: 0, z: -100};
-        carcube.applyCentralImpulse(forcev2);
+        //carcube.applyCentralImpulse(forcev2); //kickstart
 }
 
 
