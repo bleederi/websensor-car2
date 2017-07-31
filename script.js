@@ -214,12 +214,12 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 if(direction == "left")
                 {
                         velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        forcev = {x: -forcefactor*mass*force, y: 0, z: -40*speed};
+                        forcev = {x: -forcefactor*mass*force, y: 0, z: -4*mass*speed};
                 }
                 else if (direction == "right")
                 {
                         velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        forcev = {x: forcefactor*mass*force, y: 0, z: -40*speed};
+                        forcev = {x: forcefactor*mass*force, y: 0, z: -4*mass*speed};
                 }
                 else    //no sensors
                 {
@@ -238,7 +238,8 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 //model.rotation.set(car.rotation.x, car.rotation.y, car.rotation.z );
                 //model.rotateY(car.rotation.y-model.rotation.y);
                 //model.rotateZ(car.rotation.z-model.rotation.z);
-                car.setLinearVelocity(velocity);
+                //car.setLinearVelocity(velocity);
+                car.applyCentralImpulse(forcev);
         }
 }
 
