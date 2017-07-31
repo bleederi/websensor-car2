@@ -365,6 +365,7 @@ function createCar() {
         carcube.position.set(0, 0, 0);
         carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection                 
         scene.add( carcube );
+        camera.add(carcube);
         scene.add(carModel);
         /*
         carcube.material.transparent = true;
