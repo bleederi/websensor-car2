@@ -434,7 +434,7 @@ customElements.define("game-view", class extends HTMLElement {
         camera.target = new THREE.Vector3(0, 0, 0);
 
 	camera.position.y = 1;
-	camera.position.z = 2;
+	camera.position.z = 5;
 
         this.manager = new THREE.LoadingManager();
 
