@@ -342,7 +342,7 @@ function createGround() {
 function createCar() {
         //Physics for any model: add model as threejs object and then add physijs box to it
         //var geometry = new THREE.BoxGeometry( carWidth, 1, 1 );
-        var geometry = new THREE.BoxGeometry( (carbb.max.x-carbb.min.x)/2, (carbb.max.y-carbb.min.y)/2, (carbb.max.z-carbb.min.z)/2 );
+        var geometry = new THREE.BoxGeometry( (carbb.max.z-carbb.min.z)/2, (carbb.max.y-carbb.min.y)/2, (carbb.max.x-carbb.min.x)/2 );  //bb rotated because model also rotated
                 var material = Physijs.createMaterial(
                     new THREE.MeshBasicMaterial({ color: "red" }),
                     friction,
