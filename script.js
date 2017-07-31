@@ -512,6 +512,8 @@ customElements.define("game-view", class extends HTMLElement {
                 orientation_sensor.onactivate = () => {
                 };
                 orientation_sensor.start();
+
+                //below from https://w3c.github.io/motion-sensors/#complementary-filters
                 const accl = new Accelerometer({frequency: sensorfreq});
                 const gyro = new Gyroscope({frequency: sensorfreq});
                 let timestamp = null;
@@ -538,7 +540,7 @@ customElements.define("game-view", class extends HTMLElement {
 
                         //alpha = alpha + gyro.z * dt;
                         alpha = (1 - zeroBias) * (alpha + gyro.z * dt);
-                        beta = bias * (beta + gyro.x * dt) + (1.0 - bias) * (accl.x * scale / norm);
+                        beta = (1 - zeroBias) * (bias * (beta + gyro.x * dt) + (1.0 - bias) * (accl.x * scale / norm));
                         gamma = bias * (gamma + gyro.y * dt) + (1.0 - bias) * (accl.y * -scale / norm);
 
                         angles = {"alpha": alpha, "beta": beta, "gamma": gamma};
