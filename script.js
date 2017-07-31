@@ -52,7 +52,9 @@ var roll = null;
 var pitch = null;
 var yaw = null;
 
+var prevAngles = {"alpha": null, "beta": null, "gamma": null};
 var angles = {"alpha": null, "beta": null, "gamma": null};
+var angleDiff = {"alpha": null, "beta": null, "gamma": null};
 
 var direction = null;
 var force = null;
@@ -219,12 +221,14 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                         //forcev = {x: (forcefactor/2)*mass*angles.beta, y: 0, z: -(forcefactor/6)*mass};
                         //velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         //forcev = {x: forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
-                        forcev = {x: -(forcefactor/2)*mass*force*Math.sin(angles.beta), y: 0, z: -(forcefactor/6)*mass*Math.abs(Math.cos(angles.beta))};
+                        car.rotation.y = angles.beta;
+                        forcev = {x: -(forcefactor/2)*mass*force*Math.sin(car.rotation.y), y: 0, z: -(forcefactor/6)*mass*Math.abs(Math.cos(car.rotation.y))}; 
                 if(nosensors)    //no sensors
                 {
                         //velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         forcev = {x: 0, y: 0, z: -(forcefactor/6)*mass};
                 }
+                //Sync camera and car model with the car collision box
                 camera.position.x = car.position.x;
                 camera.position.z = car.position.z + 5;
                 model.position.setX(car.position.x);
@@ -504,6 +508,8 @@ customElements.define("game-view", class extends HTMLElement {
                 const bias = 0.98;
                 const zeroBias = 0.02;
                 gyro.onreading = () => {
+
+                        prevAngles = angles;
                    let dt = timestamp ? (gyro.timestamp - timestamp) / 1000 : 0;
                    timestamp = gyro.timestamp;
 
@@ -523,8 +529,7 @@ customElements.define("game-view", class extends HTMLElement {
                         gamma = bias * (gamma + gyro.y * dt) + (1.0 - bias) * (accl.y * -scale / norm);
 
                         angles = {"alpha": alpha, "beta": beta, "gamma": gamma};
-                        //console.log(angles);
-
+                        //angleDiff = {"alpha": alpha-prevAngles.alpha, "beta": beta-prevAngles.beta, "gamma": gamma-prevAngles.gamma};
                    // Do something with Euler angles (alpha, beta, gamma).
                  };
 
