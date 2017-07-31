@@ -216,17 +216,17 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 var velocity = new THREE.Vector3();
                 var forcev = new THREE.Vector3();
                 //Limit the angle to between [-pi/2, pi/2]
-                if(angles.beta > Math.PI/2)
+                if(angles.alpha > Math.PI/2)
                 {
-                        var beta = Math.PI/2;
+                        var alpha = Math.PI/2;
                 }
-                else if(angles.beta < -Math.PI/2)
+                else if(angles.alpha < -Math.PI/2)
                 {
-                        var beta = -Math.PI/2;
+                        var alpha = -Math.PI/2;
                 }
                 else
                 {
-                        var beta = angles.beta;
+                        var alpha = angles.alpha;
                 }
                 //in portrait: beta right-left, <0 left, >0 right in landscape: alpha right-left <0 left, >0 right
                         //velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
@@ -234,7 +234,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                         //forcev = {x: (forcefactor/2)*mass*angles.beta, y: 0, z: -(forcefactor/6)*mass};
                         //velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         //forcev = {x: forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
-                        car.rotation.y = beta;
+                        car.rotation.y = alpha;
                         forcev = {x: -(forcefactor/2)*mass*force*Math.sin(car.rotation.y), y: 0, z: -(forcefactor/6)*mass*Math.abs(Math.cos(car.rotation.y))}; 
                 if(nosensors)    //no sensors
                 {
