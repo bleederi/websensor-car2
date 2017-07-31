@@ -52,6 +52,8 @@ var roll = null;
 var pitch = null;
 var yaw = null;
 
+var angles = {"alpha": null, "beta": null, "gamma": null};
+
 var direction = null;
 var force = null;
 var offroad = false;
@@ -498,7 +500,7 @@ customElements.define("game-view", class extends HTMLElement {
                 orientation_sensor.onactivate = () => {
                 };
                 orientation_sensor.start();
-                /*const accl = new Accelerometer({frequency: sensorfreq});
+                const accl = new Accelerometer({frequency: sensorfreq});
                 const gyro = new Gyroscope({frequency: sensorfreq});
                 let timestamp = null;
                 let alpha = beta = gamma = 0;
@@ -523,12 +525,14 @@ customElements.define("game-view", class extends HTMLElement {
                         beta = bias * (beta + gyro.x * dt) + (1.0 - bias) * (accl.x * scale / norm);
                         gamma = bias * (gamma + gyro.y * dt) + (1.0 - bias) * (accl.y * -scale / norm);
 
+                        angles = {"alpha": alpha, "beta": beta, "gamma": gamma};
+                        console.log(angles);
+
                    // Do something with Euler angles (alpha, beta, gamma).
                  };
 
                  accl.start();
                  gyro.start();
-                */
                 }
                 catch(err) {
                         console.log(err.message);
