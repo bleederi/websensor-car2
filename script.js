@@ -364,9 +364,10 @@ function createCar() {
         //carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
         carcube.position.set(0, 0, 0);
         carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection        
-        carcube.add(camera);    //chase camera         
+        carcube.add(camera);    //chase camera
+        carcube.add(carModel);       
         scene.add( carcube );
-        scene.add(carModel);
+        //scene.add(carModel);
         /*
         carcube.material.transparent = true;
         carcube.material.opacity = 0;
