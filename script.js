@@ -211,6 +211,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
         if(car !== undefined) {
                 var velocity = new THREE.Vector3();
                 var forcev = new THREE.Vector3();
+                var carFacing = carcube.rotation;
                 if(direction == "left")
                 {
                         velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: -speed*100});
@@ -223,7 +224,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 }
                 else
                 {
-                        velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: -speed*100});
+                        velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: -speed*100*Math.sin()});
                         forcev = {x: 0, y: 0, z: -40*speed};
                 }
                 camera.position.x = car.position.x;
