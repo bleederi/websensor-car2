@@ -243,8 +243,8 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                         forcev = {x: 0, y: 0, z: -(forcefactor/6)*mass};
                 }
                 //Sync camera and car model with the car collision box
-                camera.position.x = car.position.x;
-                camera.position.z = car.position.z + 5;
+                //camera.position.x = car.position.x;
+                //camera.position.z = car.position.z + 5;
                 model.position.setX(car.position.x);
                 model.position.setZ(car.position.z);
                 model.position.setY(car.position.y);
