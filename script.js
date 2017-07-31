@@ -119,7 +119,7 @@ var gameview = null;
 //PhysiJS vars
 var friction = 0.8;
 var restitution = 0;
-var forcefactor = 0.5;
+var forcefactor = 1;
 var mass = 200;
 
 Physijs.scripts.worker = '/websensor-car/js/physijs_worker.js';
