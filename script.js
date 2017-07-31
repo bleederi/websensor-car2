@@ -353,7 +353,7 @@ function createCar() {
         //carcube.visible = false;
         //carcube.material.visible = false;
         */
-        carcube.setDamping(0.1, 0.1);
+        carcube.setDamping(0.5, 0.5);
         var forcev2 = {x: 0, y: 0, z: -1000*speed};
         carcube.applyCentralImpulse(forcev2);
 }
