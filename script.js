@@ -213,20 +213,15 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
         if(car !== undefined) {
                 var velocity = new THREE.Vector3();
                 var forcev = new THREE.Vector3();
-                //beta right-left, <0 left, >0 right
-                if(direction == "left")
-                {
+                //in portrait: beta right-left, <0 left, >0 right in landscape: alpha right-left <0 left, >0 right
                         //velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         //forcev = {x: -forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
-                        forcev = {x: -(forcefactor/2)*mass*force, y: 0, z: -(forcefactor/6)*mass};
-                }
-                else if (direction == "right")
-                {
+                        //forcev = {x: (forcefactor/2)*mass*angles.beta, y: 0, z: -(forcefactor/6)*mass};
                         //velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         //forcev = {x: forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
-                        forcev = {x: (forcefactor/2)*mass*force, y: 0, z: -(forcefactor/6)*mass};
+                        forcev = {x: (forcefactor/2)*mass*force*angles.beta, y: 0, z: -(forcefactor/6)*mass};
                 }
-                else    //no sensors
+                if(nosensors)    //no sensors
                 {
                         //velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         forcev = {x: 0, y: 0, z: -(forcefactor/6)*mass};
@@ -523,8 +518,8 @@ customElements.define("game-view", class extends HTMLElement {
                    // the unit vector with values from [-1, 1] with PI/2, covering [-PI/2, PI/2].
                    const scale = Math.PI / 2;
 
-                        //alpha = alpha + gyro.z * dt;
-                        alpha = (1 - zeroBias) * (alpha + gyro.z * dt);
+                        alpha = alpha + gyro.z * dt;
+                        //alpha = (1 - zeroBias) * (alpha + gyro.z * dt);
                         beta = bias * (beta + gyro.x * dt) + (1.0 - bias) * (accl.x * scale / norm);
                         gamma = bias * (gamma + gyro.y * dt) + (1.0 - bias) * (accl.y * -scale / norm);
 
