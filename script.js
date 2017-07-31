@@ -214,14 +214,12 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 if(direction == "left")
                 {
                         //velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        //forcev = {x: -forcefactor/2*mass*force, y: 0, z: -(forcefactor/2)*mass*force};
-                        forcev = {x: (forcefactor/2)*mass*force, y: 0, z: 0};
+                        forcev = {x: -forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
                 }
                 else if (direction == "right")
                 {
                         //velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        //forcev = {x: forcefactor/2*mass*force, y: 0, z: -(forcefactor/2)*mass*force};
-                        forcev = {x: (forcefactor/2)*mass*force, y: 0, z: 0};
+                        forcev = {x: forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
                 }
                 else    //no sensors
                 {
@@ -360,7 +358,7 @@ function createCar() {
         //carcube.material.visible = false;
         */
         carcube.setDamping(0.5, 0.5);
-        var forcev2 = {x: 0, y: 0, z: -1000*speed};
+        var forcev2 = {x: 0, y: 0, z: -100};
         carcube.applyCentralImpulse(forcev2);
 }
 
@@ -398,7 +396,7 @@ function loop(camera, carcube) {
                 console.log("Offroad");
                 gameOver();         
         } */  
-        speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit             
+        //speed = 0.1 + Math.abs(carcube.position.z/5000);  //increase speed bit by bit             
 }
 
 //The custom element where the game will be rendered
