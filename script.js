@@ -84,7 +84,7 @@ var objloader = null;
 var x = 0;      //car x coordinate
 var y = 0;      //car y coordinate
 var speed = 0.1;        //0.1 for threeJS, 10 for Physijs
-var zerobiascoeff = 2;  //2 means 0.02 zerobias at 60Hz sensor polling rate
+var zerobiascoeff = 1;  //2 means 0.02 zerobias at 60Hz sensor polling rate
 
 var fps           = 60;
 var step          = 1/fps;                   // length of each frame in seconds
@@ -554,6 +554,7 @@ customElements.define("game-view", class extends HTMLElement {
                    // the unit vector with values from [-1, 1] with PI/2, covering [-PI/2, PI/2].
                    const scale = Math.PI / 2;
 
+                        //For device-adjusting orientation, multiply by coefficient (1 - zeroBias)
                         //alpha = alpha + gyro.z * dt;
                         alpha = (1 - zeroBias) * (alpha + gyro.z * dt);
                         beta =  (bias * (beta + gyro.x * dt) + (1.0 - bias) * (accl.x * scale / norm));
