@@ -271,7 +271,6 @@ function update()       //Update direction and force
         }
         else
         {
-                dircetion = getDirection(roll, pitch, yaw, mode);
                 force = 0.5;
         }
 }
