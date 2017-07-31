@@ -213,6 +213,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
         if(car !== undefined) {
                 var velocity = new THREE.Vector3();
                 var forcev = new THREE.Vector3();
+                //beta right-left, <0 left, >0 right
                 if(direction == "left")
                 {
                         //velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
@@ -528,7 +529,7 @@ customElements.define("game-view", class extends HTMLElement {
                         gamma = bias * (gamma + gyro.y * dt) + (1.0 - bias) * (accl.y * -scale / norm);
 
                         angles = {"alpha": alpha, "beta": beta, "gamma": gamma};
-                        console.log(angles);
+                        //console.log(angles);
 
                    // Do something with Euler angles (alpha, beta, gamma).
                  };
