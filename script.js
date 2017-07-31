@@ -103,7 +103,7 @@ var gameview = null;
 //PhysiJS vars
 var friction = 0.8;
 var restitution = 0;
-var forcefactor = 2;
+var forcefactor = 4;
 var mass = 200;
 
 Physijs.scripts.worker = '/websensor-car/js/physijs_worker.js';
@@ -214,12 +214,12 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 if(direction == "left")
                 {
                         //velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        forcev = {x: -forcefactor*mass*force, y: 0, z: -1*mass*force};
+                        forcev = {x: -forcefactor/2*mass*force, y: 0, z: -(forcefactor/2)*mass*force};
                 }
                 else if (direction == "right")
                 {
                         //velocity = ({x: car.getLinearVelocity().x+2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
-                        forcev = {x: forcefactor*mass*force, y: 0, z: -1*mass*force};
+                        forcev = {x: forcefactor/2*mass*force, y: 0, z: -(forcefactor/2)*mass*force};
                 }
                 else    //no sensors
                 {
