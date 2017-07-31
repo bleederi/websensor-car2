@@ -269,6 +269,11 @@ function update()       //Update direction and force
                 direction = getDirection(roll, pitch, yaw, mode);
                 force = getForce(roll, pitch, yaw, mode);
         }
+        else
+        {
+                dircetion = getDirection(roll, pitch, yaw, mode);
+                force = 0.5;
+        }
 }
 
 /*      Functions related to testing without sensors      */
