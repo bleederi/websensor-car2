@@ -526,7 +526,7 @@ customElements.define("game-view", class extends HTMLElement {
                 let beta = 0;
                 let gamma = 0;
                 const bias = 0.98;
-                const zeroBias = 1.5*(0.6/sensorfreq);
+                const zeroBias = 2*(0.6/sensorfreq);    //coeff*0.01 when 60Hz
                 gyro.onreading = () => {
 
                         prevAngles = angles;
