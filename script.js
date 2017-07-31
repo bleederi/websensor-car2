@@ -59,6 +59,9 @@ var nosensors = false;      //Flag for testing without sensors
 var roll = null;
 var pitch = null;
 var yaw = null;
+var alpha = 0;
+var beta = 0;
+var gamma = 0;
 
 var prevAngles = {"alpha": null, "beta": null, "gamma": null};
 var angles = {"alpha": null, "beta": null, "gamma": null};
@@ -531,13 +534,12 @@ customElements.define("game-view", class extends HTMLElement {
                 const accl = new Accelerometer({frequency: sensorfreq});
                 const gyro = new Gyroscope({frequency: sensorfreq});
                 let timestamp = null;
-                let alpha = 0;
-                let beta = 0;
-                let gamma = 0;
+                //let alpha = 0;
+                //let beta = 0;
+                //let gamma = 0;
                 const bias = 0.98;
-                const zeroBias = zerobiascoeff*(0.6/sensorfreq);    //coeff*0.01 when 60Hz, with beta coeff 2, with alpha 0.5
                 gyro.onreading = () => {
-
+                const zeroBias = zerobiascoeff*(0.6/sensorfreq);    //coeff*0.01 when 60Hz, with beta coeff 2, with alpha 0.5
                         prevAngles = angles;
                    let dt = timestamp ? (gyro.timestamp - timestamp) / 1000 : 0;
                    timestamp = gyro.timestamp;
@@ -554,7 +556,7 @@ customElements.define("game-view", class extends HTMLElement {
 
                         //alpha = alpha + gyro.z * dt;
                         alpha = (1 - zeroBias) * (alpha + gyro.z * dt);
-                        beta = (1 - zeroBias) * (bias * (beta + gyro.x * dt) + (1.0 - bias) * (accl.x * scale / norm));
+                        beta =  (bias * (beta + gyro.x * dt) + (1.0 - bias) * (accl.x * scale / norm));
                         gamma = bias * (gamma + gyro.y * dt) + (1.0 - bias) * (accl.y * -scale / norm);
 
                         angles = {"alpha": alpha, "beta": beta, "gamma": gamma};
