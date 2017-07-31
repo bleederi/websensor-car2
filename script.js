@@ -28,6 +28,14 @@ slider_speed.onchange = () => {
         console.log("Speed:", speed);
 };
 
+var slider_zerobiascoeff = document.getElementById("slider_zerobiascoeff");
+var slider_zerobiascoeff_div = document.getElementById("slider_zerobiascoeff_amount");
+slider_zerobiascoeff.onchange = () => {
+        zerobiascoeff = slider_zerobiascoeff.value;
+        slider_zerobiascoeff_div.innerHTML = zerobiascoeff;
+        console.log("Zero bias coeff:", zerobiascoeff);
+};
+
 /* Globals */
 var xcoord_div = document.getElementById("xcoord");
 var ycoord_div = document.getElementById("ycoord");
@@ -73,6 +81,7 @@ var objloader = null;
 var x = 0;      //car x coordinate
 var y = 0;      //car y coordinate
 var speed = 0.1;        //0.1 for threeJS, 10 for Physijs
+var zerobiascoeff = 2;  //2 means 0.02 zerobias at 60Hz sensor polling rate
 
 var fps           = 60;
 var step          = 1/fps;                   // length of each frame in seconds
@@ -526,7 +535,7 @@ customElements.define("game-view", class extends HTMLElement {
                 let beta = 0;
                 let gamma = 0;
                 const bias = 0.98;
-                const zeroBias = 2*(0.6/sensorfreq);    //coeff*0.01 when 60Hz, with beta coeff 2, with alpha 0.5
+                const zeroBias = zerobiascoeff*(0.6/sensorfreq);    //coeff*0.01 when 60Hz, with beta coeff 2, with alpha 0.5
                 gyro.onreading = () => {
 
                         prevAngles = angles;
