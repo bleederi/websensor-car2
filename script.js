@@ -481,6 +481,7 @@ customElements.define("game-view", class extends HTMLElement {
                 //object.rotation.set(new THREE.Vector3( Math.PI / 2, 0, 0));
 		//var mesh = new THREE.Mesh(object);
                 object.rotateY(Math.PI/2);
+                object.__dirtyRotation = true;
                 //scene.add(object);
                 carbb = new THREE.Box3().setFromObject(object);
                 //console.log(carbb);
