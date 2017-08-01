@@ -269,7 +269,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                 //model.rotateY(car.rotation.y-model.rotation.y);
                 //model.rotateZ(car.rotation.z-model.rotation.z);
                 //car.setLinearVelocity(velocity);
-                car.applyCentralImpulse(forcev);
+                car.applyCentralForce(forcev);
         }
 }
 
