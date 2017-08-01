@@ -241,6 +241,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                         var alpha = angles.alpha;
                 }
                 //in portrait: beta right-left, <0 left, >0 right in landscape: alpha right-left <0 left, >0 right
+                //in landscape: gamma <0 braking, gamma >0 accelerating
                         //velocity = ({x: car.getLinearVelocity().x-2*force, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
                         //forcev = {x: -forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
                         //forcev = {x: (forcefactor/2)*mass*angles.beta, y: 0, z: -(forcefactor/6)*mass};
@@ -248,7 +249,7 @@ function move(camera, car, model) //Moves the car(camera) and syncs the model to
                         //forcev = {x: forcefactor/2*mass*force, y: 0, z: -forcefactor*mass*force};
                         car.rotation.y = 4*angles.alpha;
                         car.__dirtyRotation = true;
-                        forcev = {x: -(forcefactor/2)*mass*force*Math.sin(car.rotation.y), y: 0, z: -(forcefactor/6)*mass*Math.abs(Math.cos(car.rotation.y))}; 
+                        forcev = {x: -(forcefactor/2)*mass*force*Math.sin(car.rotation.y), y: 0, z: -(forcefactor/6)*mass*Math.abs(Math.cos(car.rotation.y))*angles.gamma}; 
                 if(nosensors)    //no sensors
                 {
                         //velocity = ({x: car.getLinearVelocity().x, y: car.getLinearVelocity().y, z: car.getLinearVelocity().z-speed*Math.cos(car.rotation.z)});
