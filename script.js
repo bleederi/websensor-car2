@@ -377,10 +377,13 @@ function createCar() {
         //carcube = new Physijs.BoxMesh( geometry, new THREE.MeshFaceMaterial(), mass );
         carcube.position.set(0, 0, 0);
         carModel.position.set(0, 0, 0);
-        carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection        
+        //carcube.bb = new THREE.Box3().setFromObject(carcube); //create bounding box for collision detection 
+        carcube.bb = new THREE.BoundingBoxHelper(this.carcube, 0xff0000);
+        carcube.bb.update();          
         carcube.add(camera);    //chase camera
         carcube.add(carModel);       
         scene.add( carcube );
+        scene.add(carcube.bb);
         //scene.add(carModel);
         /*
         carcube.material.transparent = true;
